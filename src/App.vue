@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
+import CharacterSelect from './components/CharacterSelect.vue'
 // import HelloWorld from './components/HelloWorld.vue'
 </script>
 
@@ -18,6 +19,16 @@ import { RouterLink, RouterView } from 'vue-router'
   </header> -->
 
   <RouterView />
+  <div class="grid grid-cols-4">
+    <CharacterSelect playerNumber="1" />
+    <CharacterSelect playerNumber="2" />
+    <CharacterSelect playerNumber="3" />
+    <CharacterSelect playerNumber="4" />
+    <CharacterSelect playerNumber="5" />
+    <CharacterSelect playerNumber="6" />
+    <CharacterSelect playerNumber="7" />
+    <CharacterSelect playerNumber="8" />
+  </div>
 </template>
 
 <style scoped>
