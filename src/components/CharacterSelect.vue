@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const props = defineProps({ playerNumber: String })
 
-const getPlayerNumber = () => {
+function getPlayerNumber() {
   switch (props.playerNumber) {
     case '1':
       return 'First Player'

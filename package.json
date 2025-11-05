@@ -18,6 +18,7 @@
   "dependencies": {
     "@tailwindcss/vite": "^4.1.14",
     "daisyui": "^5.1.27",
+    "html2canvas-pro": "^1.5.12",
     "tailwindcss": "^4.1.14",
     "vue": "^3.5.22",
     "vue-router": "^4.5.1"

@@ -1,7 +1,10 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
-import CharacterSelect from './components/CharacterSelect.vue'
+import { RouterLink, RouterView } from 'vue-router';
 // import HelloWorld from './components/HelloWorld.vue'
+import { useTemplateRef, onMounted } from 'vue';
+import exportAsImage from './utils/exportAsImage';
+
+const input = useTemplateRef('exportRef');
 </script>
 
 <template>
@@ -19,16 +22,10 @@ import CharacterSelect from './components/CharacterSelect.vue'
   </header> -->
 
   <RouterView />
-  <div class="grid grid-cols-4">
-    <CharacterSelect playerNumber="1" />
-    <CharacterSelect playerNumber="2" />
-    <CharacterSelect playerNumber="3" />
-    <CharacterSelect playerNumber="4" />
-    <CharacterSelect playerNumber="5" />
-    <CharacterSelect playerNumber="6" />
-    <CharacterSelect playerNumber="7" />
-    <CharacterSelect playerNumber="8" />
+  <div ref="exportRef">
+    <p>This is the test area</p>
   </div>
+  <button class="btn" @click="exportAsImage(input, 'test-image')">Export as Image</button>
 </template>
 
 <style scoped>
