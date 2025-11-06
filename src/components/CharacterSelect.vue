@@ -56,18 +56,14 @@ const characters = [
 ];
 
 const playerLabel = getPlayerNumber();
-const selectedCharacter = ref<string>('');
+const selectedCharacter = defineModel<string>('selectedCharacter');
 </script>
 
 <template>
   <fieldset class="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4">
     <legend class="fieldset-legend">{{ playerLabel }}</legend>
     <input type="text" placeholder="Player Name" class="input" />
-    <select
-      class="select"
-      v-model="selectedCharacter"
-      @input="$emit('update:character', selectedCharacter)"
-    >
+    <select class="select" v-model="selectedCharacter">
       <option disabled selected>Main Character</option>
       <option v-for="character in characters" :key="character">{{ character }}</option>
     </select>
