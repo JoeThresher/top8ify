@@ -1,10 +1,6 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router';
 // import HelloWorld from './components/HelloWorld.vue'
-import { useTemplateRef, onMounted } from 'vue';
-import exportAsImage from './utils/exportAsImage';
-
-const input = useTemplateRef('exportRef');
 </script>
 
 <template>
@@ -22,10 +18,6 @@ const input = useTemplateRef('exportRef');
   </header> -->
 
   <RouterView />
-  <div ref="exportRef">
-    <p>This is the test area</p>
-  </div>
-  <button class="btn" @click="exportAsImage(input, 'test-image')">Export as Image</button>
 </template>
 
 <style scoped>

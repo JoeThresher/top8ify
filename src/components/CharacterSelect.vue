@@ -1,41 +1,75 @@
 <script setup lang="ts">
-const props = defineProps({ playerNumber: String })
+import { ref } from 'vue';
+
+const props = defineProps({ playerNumber: String });
 
 function getPlayerNumber() {
   switch (props.playerNumber) {
     case '1':
-      return 'First Player'
+      return 'First Player';
     case '2':
-      return 'Second Player'
+      return 'Second Player';
     case '3':
-      return 'Third Player'
+      return 'Third Player';
     case '4':
-      return 'Fourth Player'
+      return 'Fourth Player';
     case '5':
-      return 'Fifth Player'
+      return 'Fifth Player';
     case '6':
-      return 'Sixth Player'
+      return 'Sixth Player';
     case '7':
-      return 'Seventh Player'
+      return 'Seventh Player';
     case '8':
-      return 'Eighth Player'
+      return 'Eighth Player';
     default:
-      return 'Player'
+      return 'Player';
   }
 }
 
-const playerLabel = getPlayerNumber()
+const characters = [
+  'Bowser',
+  'Captain Falcon',
+  'Donkey Kong',
+  'Dr. Mario',
+  'Fox',
+  'Falco',
+  'Ganondorf',
+  'Ice Climbers',
+  'Jigglypuff',
+  'Kirby',
+  'Link',
+  'Luigi',
+  'Mario',
+  'Marth',
+  'Mewtwo',
+  'Mr. Game & Watch',
+  'Ness',
+  'Peach',
+  'Pichu',
+  'Pikachu',
+  'Roy',
+  'Samus',
+  'Sheik',
+  'Yoshi',
+  'Young Link',
+  'Zelda',
+];
+
+const playerLabel = getPlayerNumber();
+const selectedCharacter = ref<string>('');
 </script>
 
 <template>
   <fieldset class="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4">
     <legend class="fieldset-legend">{{ playerLabel }}</legend>
     <input type="text" placeholder="Player Name" class="input" />
-    <select class="select">
+    <select
+      class="select"
+      v-model="selectedCharacter"
+      @input="$emit('update:character', selectedCharacter)"
+    >
       <option disabled selected>Main Character</option>
-      <option>Fox</option>
-      <option>Falco</option>
-      <option>Marth</option>
+      <option v-for="character in characters" :key="character">{{ character }}</option>
     </select>
     <select class="select">
       <option disabled selected>Main Character Color</option>

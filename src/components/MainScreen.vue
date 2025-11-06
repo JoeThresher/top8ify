@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import CharacterSelect from './CharacterSelect.vue'
+import CharacterSelect from './CharacterSelect.vue';
+import OutputScreen from './OutputScreen.vue';
 </script>
 
 <template>
@@ -12,5 +13,8 @@ import CharacterSelect from './CharacterSelect.vue'
     <CharacterSelect playerNumber="6" />
     <CharacterSelect playerNumber="7" />
     <CharacterSelect playerNumber="8" />
+  </div>
+  <div>
+    <OutputScreen />
   </div>
 </template>
