@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { get } from 'http';
 import { ref, watch } from 'vue';
 
 const props = defineProps({ playerNumber: String });
@@ -60,25 +59,75 @@ const playerLabel = getPlayerNumber();
 const playerName = defineModel<string>('playerName');
 const selectedCharacter = defineModel<string>('selectedCharacter');
 const characterColor = defineModel<string>('characterColor');
-const characterColorOptions = ref<string[]>(getCharacterColorOptions(selectedCharacter.value));
+const characterColorOptions = ref<string[]>([]);
 
-watch(characterColor, getCharacterColorOptions);
-
-function getCharacterColorOptions(currentCharacter: string | undefined): string[] {
-  switch (currentCharacter) {
+watch(selectedCharacter, async (newCharacter) => {
+  characterColor.value = 'Default';
+  switch (newCharacter) {
+    case 'Bowser':
+      characterColorOptions.value = ['Default', 'Red', 'Blue', 'Black'];
+      break;
+    case 'Captain Falcon':
+      characterColorOptions.value = ['Default', 'Black', 'Red', 'White', 'Green', 'Blue'];
+      break;
+    case 'Donkey Kong':
+    case 'Dr. Mario':
+      characterColorOptions.value = ['Default', 'Black', 'Red', 'Blue', 'Green'];
+      break;
     case 'Fox':
     case 'Falco':
+    case 'Mewtwo':
+    case 'Mr. Game & Watch':
+    case 'Pichu':
     case 'Pikachu':
-    case 'Samus':
-      return ['Neutral', 'Red', 'Blue', 'Green', 'Yellow'];
-    case 'Mario':
+      characterColorOptions.value = ['Default', 'Red', 'Blue', 'Green'];
+      break;
+    case 'Ganondorf':
+      characterColorOptions.value = ['Default', 'Red', 'Blue', 'Green', 'Purple'];
+      break;
+    case 'Ice Climbers':
+      characterColorOptions.value = ['Default', 'Green', 'Orange', 'Red'];
+      break;
+    case 'Jigglypuff':
+    case 'Roy':
+      characterColorOptions.value = ['Default', 'Red', 'Blue', 'Green', 'Yellow'];
+      break;
+    case 'Kirby':
+      characterColorOptions.value = ['Default', 'Red', 'Blue', 'Green', 'Yellow', 'White'];
+      break;
+    case 'Link':
+    case 'Young Link':
+      characterColorOptions.value = ['Default', 'Blue', 'Red', 'Black', 'White'];
+      break;
     case 'Luigi':
+      characterColorOptions.value = ['Default', 'Blue', 'Red', 'White'];
+      break;
+    case 'Mario':
+      characterColorOptions.value = ['Default', 'Blue', 'Green', 'Black', 'Yellow'];
+      break;
+    case 'Marth':
+      characterColorOptions.value = ['Default', 'Red', 'Green', 'Black', 'White'];
+      break;
+    case 'Ness':
+      characterColorOptions.value = ['Default', 'Yellow', 'Blue', 'Green'];
+      break;
     case 'Peach':
-      return ['Neutral', 'Red', 'Blue', 'Green'];
+      characterColorOptions.value = ['Default', 'Yellow', 'White', 'Blue', 'Green'];
+      break;
+    case 'Samus':
+      characterColorOptions.value = ['Default', 'Pink', 'Black', 'Green', 'Purple'];
+      break;
+    case 'Yoshi':
+      characterColorOptions.value = ['Default', 'Red', 'Blue', 'Pink', 'Yellow', 'Cyan'];
+      break;
+    case 'Sheik':
+    case 'Zelda':
+      characterColorOptions.value = ['Default', 'Blue', 'Red', 'Green', 'White'];
+      break;
     default:
-      return ['No character selected'];
+      characterColorOptions.value = ['No character selected'];
   }
-}
+});
 </script>
 
 <template>

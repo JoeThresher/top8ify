@@ -2,10 +2,14 @@
 import { useTemplateRef } from 'vue';
 import exportAsImage from '../utils/exportAsImage';
 const input = useTemplateRef('exportRef');
-const props = defineProps<{ characters: string[]; playerNames: string[] }>();
+const props = defineProps<{
+  characters: string[];
+  playerNames: string[];
+  characterColors: string[];
+}>();
 
-function getImagePath(character: string | undefined): string {
-  return `/src/assets/character-portraits/${character}/Default.png`;
+function getImagePath(character: string | undefined, color: string | undefined): string {
+  return `/src/assets/character-portraits/${character}/${color}.png`;
 }
 
 function getDefaultImagePath(e: Event): void {
@@ -20,7 +24,7 @@ function getDefaultImagePath(e: Event): void {
   <div ref="exportRef" class="canvas">
     <div class="character-frame" id="frame1">
       <img
-        :src="getImagePath(props.characters[0])"
+        :src="getImagePath(props.characters[0], props.characterColors[0])"
         class="character-image"
         @error="getDefaultImagePath"
       />
@@ -28,7 +32,7 @@ function getDefaultImagePath(e: Event): void {
     </div>
     <div class="character-frame" id="frame2">
       <img
-        :src="getImagePath(props.characters[1])"
+        :src="getImagePath(props.characters[1], props.characterColors[1])"
         class="character-image"
         @error="getDefaultImagePath"
       />
@@ -36,7 +40,7 @@ function getDefaultImagePath(e: Event): void {
     </div>
     <div class="character-frame" id="frame3">
       <img
-        :src="getImagePath(props.characters[2])"
+        :src="getImagePath(props.characters[2], props.characterColors[2])"
         class="character-image"
         @error="getDefaultImagePath"
       />
@@ -44,7 +48,7 @@ function getDefaultImagePath(e: Event): void {
     </div>
     <div class="character-frame" id="frame4">
       <img
-        :src="getImagePath(props.characters[3])"
+        :src="getImagePath(props.characters[3], props.characterColors[3])"
         class="character-image"
         @error="getDefaultImagePath"
       />
@@ -52,7 +56,7 @@ function getDefaultImagePath(e: Event): void {
     </div>
     <div class="character-frame" id="frame5">
       <img
-        :src="getImagePath(props.characters[4])"
+        :src="getImagePath(props.characters[4], props.characterColors[4])"
         class="character-image"
         @error="getDefaultImagePath"
       />
@@ -60,7 +64,7 @@ function getDefaultImagePath(e: Event): void {
     </div>
     <div class="character-frame" id="frame6">
       <img
-        :src="getImagePath(props.characters[5])"
+        :src="getImagePath(props.characters[5], props.characterColors[5])"
         class="character-image"
         @error="getDefaultImagePath"
       />
@@ -68,7 +72,7 @@ function getDefaultImagePath(e: Event): void {
     </div>
     <div class="character-frame" id="frame7">
       <img
-        :src="getImagePath(props.characters[6])"
+        :src="getImagePath(props.characters[6], props.characterColors[6])"
         class="character-image"
         @error="getDefaultImagePath"
       />
@@ -76,7 +80,7 @@ function getDefaultImagePath(e: Event): void {
     </div>
     <div class="character-frame" id="frame8">
       <img
-        :src="getImagePath(props.characters[7])"
+        :src="getImagePath(props.characters[7], props.characterColors[7])"
         class="character-image"
         @error="getDefaultImagePath"
       />
