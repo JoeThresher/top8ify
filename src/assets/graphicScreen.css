@@ -13,3 +13,8 @@
   float: left;
   background-color: rgba(0, 0, 0, 0.5);
 }
+
+.character-frame .character-image {
+  width: 100%;
+  height: auto;
+}
