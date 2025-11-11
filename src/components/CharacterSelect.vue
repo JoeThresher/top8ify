@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { get } from 'http';
+import { ref, watch } from 'vue';
 
 const props = defineProps({ playerNumber: String });
 
@@ -58,6 +59,26 @@ const characters = [
 const playerLabel = getPlayerNumber();
 const playerName = defineModel<string>('playerName');
 const selectedCharacter = defineModel<string>('selectedCharacter');
+const characterColor = defineModel<string>('characterColor');
+const characterColorOptions = ref<string[]>(getCharacterColorOptions(selectedCharacter.value));
+
+watch(characterColor, getCharacterColorOptions);
+
+function getCharacterColorOptions(currentCharacter: string | undefined): string[] {
+  switch (currentCharacter) {
+    case 'Fox':
+    case 'Falco':
+    case 'Pikachu':
+    case 'Samus':
+      return ['Neutral', 'Red', 'Blue', 'Green', 'Yellow'];
+    case 'Mario':
+    case 'Luigi':
+    case 'Peach':
+      return ['Neutral', 'Red', 'Blue', 'Green'];
+    default:
+      return ['No character selected'];
+  }
+}
 </script>
 
 <template>
@@ -68,11 +89,11 @@ const selectedCharacter = defineModel<string>('selectedCharacter');
       <option disabled selected>Main Character</option>
       <option v-for="character in characters" :key="character">{{ character }}</option>
     </select>
-    <select class="select">
+    <select class="select" v-model="characterColor">
       <option disabled selected>Main Character Color</option>
-      <option>Neutral</option>
-      <option>Red</option>
-      <option>Blue</option>
+      <option v-for="colorOptions in characterColorOptions" :key="colorOptions">
+        {{ colorOptions }}
+      </option>
     </select>
     <label class="label">
       <input type="checkbox" class="checkbox" />
