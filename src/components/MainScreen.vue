@@ -2,13 +2,26 @@
 import { ref } from 'vue';
 import CharacterSelect from './CharacterSelect.vue';
 import OutputScreen from './OutputScreen.vue';
+import fetchTournamentDetails from '../utils/api';
 
 const characters = ref<string[]>(Array(8).fill(''));
 const playerNames = ref<string[]>(Array(8).fill(''));
 const characterColors = ref<string[]>(Array(8).fill(''));
+const url = ref<string>('');
+const token = ref<string>('');
+
+async function fetchStartGGData() {
+  const standings = await fetchTournamentDetails(url.value, token.value);
+  for (let i = 0; i < 8; i++) {
+    playerNames.value[i] = standings[i] ?? '';
+  }
+}
 </script>
 
 <template>
+  <input type="text" placeholder="Enter Start GG URL here" class="input" v-model="url" />
+  <input type="text" placeholder="Start GG Token" class="input" v-model="token" />
+  <button class="btn" @click="fetchStartGGData()">Fetch StartGG Data</button>
   <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4">
     <CharacterSelect
       playerNumber="1"
