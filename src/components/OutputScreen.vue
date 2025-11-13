@@ -9,13 +9,13 @@ const props = defineProps<{
 }>();
 
 function getImagePath(character: string | undefined, color: string | undefined): string {
-  return `/src/assets/character-portraits/${character}/${color}.png`;
+  return `./character-portraits/${character}/${color}.png`;
 }
 
 function getDefaultImagePath(e: Event): void {
   const target = e.target as HTMLImageElement | null;
   if (target) {
-    target.src = `/src/assets/character-portraits/Random.png`;
+    target.src = `./character-portraits/Random.png`;
   }
 }
 </script>
