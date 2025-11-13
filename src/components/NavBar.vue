@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import { Menu } from 'lucide-vue-next';
+import { RouterLink } from 'vue-router';
 </script>
 
 <template>
   <div class="navbar bg-base-100 shadow-sm">
     <div class="flex-1">
-      <a class="btn btn-ghost text-xl">Top8ify</a>
+      <RouterLink to="/" class="btn btn-ghost text-xl">Top8ify</RouterLink>
     </div>
     <div class="flex-none">
       <div class="dropdown dropdown-end">
@@ -18,7 +19,9 @@ import { Menu } from 'lucide-vue-next';
           tabindex="-1"
           class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
         >
-          <li><a>Settings</a></li>
+          <li>
+            <RouterLink to="/settings">Settings</RouterLink>
+          </li>
         </ul>
       </div>
     </div>
