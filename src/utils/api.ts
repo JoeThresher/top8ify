@@ -1,6 +1,6 @@
 import { gql, GraphQLClient } from 'graphql-request';
 
-export default async function fetchTournamentDetails(tournamentURL: string, token: string) {
+export default async function fetchTournamentDetails(tournamentURLString: string, token: string) {
   const endpoint = `https://api.start.gg/gql/alpha`;
 
   const graphQLClient = new GraphQLClient(endpoint, {
@@ -9,12 +9,37 @@ export default async function fetchTournamentDetails(tournamentURL: string, toke
     },
   });
 
-  const slug = extractSlugFromURL(tournamentURL);
+  interface TournamentInfo {
+    id: string;
+    name: string;
+    standings: string[];
+  }
 
-  const eventId = await getEventId(slug, graphQLClient);
+  const tournamentInfo: TournamentInfo = {
+    id: '',
+    name: '',
+    standings: [],
+  };
 
-  const standings = await getEventStandings(eventId, graphQLClient);
-  return standings;
+  const tournamentURL: URL = new URL(tournamentURLString);
+
+  const slug: string = tournamentURL.pathname.substring(1);
+  console.log('Slug:', slug);
+  const slugParts: string[] = slug.split('/');
+  console.log('Slug Parts:', slugParts);
+  if (slugParts.length < 2 || slugParts[0] !== 'tournament') {
+    console.error('Invalid tournament URL format.');
+    return tournamentInfo;
+  }
+  // const shortSlug = extractShortSlugFromURL(tournamentURL);
+
+  tournamentInfo.id = await getEventId(slug, graphQLClient);
+  tournamentInfo.standings = await getEventStandings(tournamentInfo.id, graphQLClient);
+  if (slugParts[1]) {
+    tournamentInfo.name = await getEventName(slugParts[1], graphQLClient);
+  }
+
+  return tournamentInfo;
 }
 
 async function getEventId(slug: string, graphQLClient: GraphQLClient) {
@@ -92,6 +117,33 @@ async function getEventStandings(eventId: string, graphQLClient: GraphQLClient) 
   return playerNames;
 }
 
-function extractSlugFromURL(url: string): string {
-  return url.replace(/^https?:\/\/start.gg\//, '');
+async function getEventName(tourneySlug: string, graphQLClient: GraphQLClient) {
+  const query = gql`
+    query TournamentEvents($tourneySlug: String!) {
+      tournament(slug: $tourneySlug) {
+        id
+        name
+        events {
+          id
+          name
+        }
+      }
+    }
+  `;
+
+  const variables = {
+    tourneySlug: tourneySlug,
+  };
+
+  interface Data {
+    tournament: {
+      id: string;
+      name: string;
+      events: Array<{ id: string; name: string }>;
+    };
+  }
+
+  const data = await graphQLClient.request<Data>(query, variables);
+  console.log(data);
+  return data.tournament.name;
 }

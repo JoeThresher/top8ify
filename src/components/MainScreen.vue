@@ -12,9 +12,10 @@ const token = ref<string>('');
 const tournamentTitle = ref<string>('');
 
 async function fetchStartGGData() {
-  const standings = await fetchTournamentDetails(url.value, token.value);
+  const tournmanetDetails = await fetchTournamentDetails(url.value, token.value);
+  tournamentTitle.value = tournmanetDetails.name;
   for (let i = 0; i < 8; i++) {
-    playerNames.value[i] = standings[i] ?? '';
+    playerNames.value[i] = tournmanetDetails.standings[i] ?? '';
   }
 }
 </script>
