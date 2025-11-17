@@ -11,7 +11,7 @@ export default async function fetchTournamentDetails(tournamentURL: string, toke
 
   const slug = extractSlugFromURL(tournamentURL);
 
-  const eventId = await getEventId(slug, graphQLClient); // need to manipulate URL to get slug
+  const eventId = await getEventId(slug, graphQLClient);
 
   const standings = await getEventStandings(eventId, graphQLClient);
   return standings;

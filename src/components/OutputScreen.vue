@@ -6,6 +6,7 @@ const props = defineProps<{
   characters: string[];
   playerNames: string[];
   characterColors: string[];
+  tournamentTitle: string;
 }>();
 
 function getImagePath(character: string | undefined, color: string | undefined): string {
@@ -22,6 +23,7 @@ function getDefaultImagePath(e: Event): void {
 
 <template>
   <div ref="exportRef" class="canvas">
+    <h1 class="tournament-title">{{ tournamentTitle }}</h1>
     <div class="character-frame" id="frame1">
       <img
         :src="getImagePath(props.characters[0], props.characterColors[0])"

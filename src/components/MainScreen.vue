@@ -9,6 +9,7 @@ const playerNames = ref<string[]>(Array(8).fill(''));
 const characterColors = ref<string[]>(Array(8).fill(''));
 const url = ref<string>('');
 const token = ref<string>('');
+const tournamentTitle = ref<string>('');
 
 async function fetchStartGGData() {
   const standings = await fetchTournamentDetails(url.value, token.value);
@@ -74,6 +75,22 @@ async function fetchStartGGData() {
         v-model:characterColor="characterColors[7]"
       />
     </div>
+    <fieldset class="fieldset bg-base-200 border-base-300 rounded-box w-xl border p-4">
+      <legend class="fieldset-legend">Config</legend>
+
+      <label class="label">Tournament Title</label>
+      <input type="text" class="input" placeholder="Tournament Title" v-model="tournamentTitle" />
+
+      <label class="label">Information</label>
+      <input
+        type="text"
+        class="input"
+        placeholder="16 Entrants - 704 W. High St, Urbana, IL 61801"
+      />
+
+      <label class="label">URL</label>
+      <input type="text" class="input" placeholder="https://start.gg/prodigy" />
+    </fieldset>
   </div>
 
   <p>DEBUG: Characters selected: {{ characters }}</p>
@@ -84,6 +101,7 @@ async function fetchStartGGData() {
       :playerNames="playerNames"
       :characters="characters"
       :characterColors="characterColors"
+      :tournamentTitle="tournamentTitle"
     />
   </div>
 </template>
