@@ -1,4 +1,5 @@
 import { app, BrowserWindow } from 'electron';
+import Store from 'electron-store';
 
 let mainWindow;
 

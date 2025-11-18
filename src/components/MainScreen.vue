@@ -3,6 +3,7 @@ import { ref } from 'vue';
 import CharacterSelect from './CharacterSelect.vue';
 import OutputScreen from './OutputScreen.vue';
 import fetchTournamentDetails from '../utils/api';
+import SettingsMenu from './SettingsMenu.vue';
 
 const characters = ref<string[]>(Array(8).fill(''));
 const playerNames = ref<string[]>(Array(8).fill(''));
@@ -10,6 +11,7 @@ const characterColors = ref<string[]>(Array(8).fill(''));
 const url = ref<string>('');
 const token = ref<string>('');
 const tournamentTitle = ref<string>('');
+const advancedOptions = ref<boolean>(false);
 
 async function fetchStartGGData() {
   const tournmanetDetails = await fetchTournamentDetails(url.value, token.value);
@@ -91,9 +93,11 @@ async function fetchStartGGData() {
 
       <label class="label">URL</label>
       <input type="text" class="input" placeholder="https://start.gg/prodigy" />
+      <button class="btn" @click="advancedOptions = !advancedOptions">Show Advanced Options</button>
     </fieldset>
   </div>
 
+  <SettingsMenu v-if="advancedOptions" v-model:apiToken="token" />
   <!-- <p>DEBUG: Characters selected: {{ characters }}</p>
   <p>DEBUG: Player names: {{ playerNames }}</p>
   <p>DEBUG: Character colors: {{ characterColors }}</p> -->
