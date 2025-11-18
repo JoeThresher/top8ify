@@ -1,7 +1,7 @@
 {
   "name": "top8ify",
   "version": "0.0.0",
-  "main": "electron.js",
+  "main": "src/electron/main.js",
   "private": true,
   "type": "module",
   "engines": {

@@ -94,9 +94,9 @@ async function fetchStartGGData() {
     </fieldset>
   </div>
 
-  <p>DEBUG: Characters selected: {{ characters }}</p>
+  <!-- <p>DEBUG: Characters selected: {{ characters }}</p>
   <p>DEBUG: Player names: {{ playerNames }}</p>
-  <p>DEBUG: Character colors: {{ characterColors }}</p>
+  <p>DEBUG: Character colors: {{ characterColors }}</p> -->
   <div class="grid place-items-center">
     <OutputScreen
       :playerNames="playerNames"

@@ -31,7 +31,6 @@ export default async function fetchTournamentDetails(tournamentURLString: string
     console.error('Invalid tournament URL format.');
     return tournamentInfo;
   }
-  // const shortSlug = extractShortSlugFromURL(tournamentURL);
 
   tournamentInfo.id = await getEventId(slug, graphQLClient);
   tournamentInfo.standings = await getEventStandings(tournamentInfo.id, graphQLClient);
