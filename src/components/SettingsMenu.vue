@@ -15,6 +15,20 @@ import isElectron from 'is-electron';
 //     });
 // }
 
+// ...
+
+declare global {
+  interface Window {
+    electron: {
+      store: {
+        get: (key: string) => any;
+        set: (key: string, val: any) => void;
+        // any other methods you've defined...
+      };
+    };
+  }
+}
+
 const apiToken = defineModel<string>('apiToken');
 
 function saveSettings() {
@@ -23,6 +37,8 @@ function saveSettings() {
     toast.error('Settings can only be saved in the desktop app.');
     return;
   }
+
+  window.electron.store.set('apiToken', apiToken);
   toast.success('Settings saved successfully!');
 }
 </script>
