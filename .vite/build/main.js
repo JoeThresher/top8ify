@@ -478,8 +478,8 @@ if (started) {
 }
 const createWindow = () => {
   const mainWindow = new require$$3$1.BrowserWindow({
-    width: 800,
-    height: 600,
+    width: 1600,
+    height: 1200,
     webPreferences: {
       preload: path$1.join(__dirname, "preload.js")
     }
