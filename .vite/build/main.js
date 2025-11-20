@@ -10925,7 +10925,6 @@ const createWindow = () => {
   {
     mainWindow.loadURL("http://localhost:5173");
   }
-  mainWindow.webContents.openDevTools();
 };
 electron.app.whenReady().then(() => {
   createWindow();
@@ -10948,18 +10947,12 @@ electron.ipcMain.on("electron-store-set", async (event, key, val) => {
   console.log("Setting value for key:", key, "to", val);
   store.set(key, val);
 });
-const projectGraphicPath = path$1.resolve(process.cwd(), "src", "assets", "graphicScreen.css");
-const fallbackName = "graphicScreen.css";
+const customFileName = "graphicScreen.css";
 const backupName = "graphicScreen.original.css";
 const backupPath = () => path$1.join(electron.app.getPath("userData"), backupName);
 async function resolveGraphicCssPath() {
-  try {
-    await fs$1.access(projectGraphicPath);
-    return { path: projectGraphicPath, location: "project" };
-  } catch {
-    const userPath = path$1.join(electron.app.getPath("userData"), fallbackName);
-    return { path: userPath, location: "userData" };
-  }
+  const userPath = path$1.join(electron.app.getPath("userData"), customFileName);
+  return { path: userPath, location: "userData" };
 }
 electron.ipcMain.handle("save-custom-css", async (event, cssContent) => {
   try {
@@ -10989,11 +10982,6 @@ electron.ipcMain.handle("restore-original-css", async () => {
     await fs$1.access(bPath);
     const original = await fs$1.readFile(bPath, "utf8");
     let targetInfo = await resolveGraphicCssPath();
-    try {
-      await fs$1.access(projectGraphicPath);
-      targetInfo = { path: projectGraphicPath, location: "project" };
-    } catch {
-    }
     await fs$1.writeFile(targetInfo.path, original, "utf8");
     return { success: true, path: targetInfo.path, location: targetInfo.location };
   } catch (err) {

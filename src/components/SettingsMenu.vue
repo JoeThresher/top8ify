@@ -178,8 +178,7 @@ onMounted(() => {
         <div class="space-y-2">
           <input type="file" accept=".css" class="file-input" @change="onFileSelected" />
           <div class="text-xs text-muted">
-            Upload a .css file to overwrite <code>src/assets/graphicScreen.css</code> in dev;
-            packaged builds fall back to app user data.
+            Upload a custom .css file to overwrite the graphic screen styles.
           </div>
           <div class="flex items-center space-x-2">
             <button v-if="hasCustomCss" class="btn" @click="removeCustomCss">

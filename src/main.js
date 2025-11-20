@@ -29,7 +29,7 @@ const createWindow = () => {
   }
 
   // Open the DevTools.
-  mainWindow.webContents.openDevTools();
+  // mainWindow.webContents.openDevTools();
 };
 
 // This method will be called when Electron has finished
@@ -71,21 +71,14 @@ ipcMain.on('electron-store-set', async (event, key, val) => {
 
 // Prefer to edit the project's `src/assets/graphicScreen.css` when available (dev mode).
 // If that file isn't available/writable (packaged or missing), fall back to saving in userData.
-const projectGraphicPath = path.resolve(process.cwd(), 'src', 'assets', 'graphicScreen.css');
-const fallbackName = 'graphicScreen.css';
+// const projectGraphicPath = path.resolve(process.cwd(), 'src', 'assets', 'graphicScreen.css');
+const customFileName = 'graphicScreen.css';
 const backupName = 'graphicScreen.original.css';
 const backupPath = () => path.join(app.getPath('userData'), backupName);
 
 async function resolveGraphicCssPath() {
-  try {
-    // check if project asset exists
-    await fs.access(projectGraphicPath);
-    return { path: projectGraphicPath, location: 'project' };
-  } catch {
-    // fallback to userData
-    const userPath = path.join(app.getPath('userData'), fallbackName);
-    return { path: userPath, location: 'userData' };
-  }
+  const userPath = path.join(app.getPath('userData'), customFileName);
+  return { path: userPath, location: 'userData' };
 }
 
 ipcMain.handle('save-custom-css', async (event, cssContent) => {
@@ -125,12 +118,12 @@ ipcMain.handle('restore-original-css', async () => {
     // Determine current target path (project if exists, else userData)
     let targetInfo = await resolveGraphicCssPath();
     // If project file doesn't exist but backup was created from project, attempt to restore to project path
-    try {
-      await fs.access(projectGraphicPath);
-      targetInfo = { path: projectGraphicPath, location: 'project' };
-    } catch {
-      // keep resolved path
-    }
+    // try {
+    //   await fs.access(projectGraphicPath);
+    //   targetInfo = { path: projectGraphicPath, location: 'project' };
+    // } catch {
+    //   // keep resolved path
+    // }
 
     await fs.writeFile(targetInfo.path, original, 'utf8');
     return { success: true, path: targetInfo.path, location: targetInfo.location };
