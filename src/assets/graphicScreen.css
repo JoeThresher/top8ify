@@ -25,3 +25,15 @@
   font-size: 18px;
   margin-top: 5px;
 }
+
+.character-frame .secondary-character-image {
+  position: relative;
+  left: 165px;
+  top: -265px;
+}
+
+.character-frame .tertiary-character-image {
+  position: relative;
+  left: 165px;
+  top: -260px;
+}

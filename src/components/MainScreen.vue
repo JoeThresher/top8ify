@@ -150,6 +150,10 @@ async function fetchStartGGData() {
       :playerNames="playerNames"
       :characters="characters"
       :characterColors="characterColors"
+      :secondaryCharacters="secondaryCharacters"
+      :secondaryCharacterColors="secondaryCharacterColors"
+      :tertiaryCharacters="tertiaryCharacters"
+      :tertiaryCharacterColors="tertiaryCharacterColors"
       :tournamentTitle="tournamentTitle"
       :numPlayers="numPlayers"
     />

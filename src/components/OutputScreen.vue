@@ -6,6 +6,10 @@ const props = defineProps<{
   characters: string[];
   playerNames: string[];
   characterColors: string[];
+  secondaryCharacters: string[];
+  secondaryCharacterColors: string[];
+  tertiaryCharacters: string[];
+  tertiaryCharacterColors: string[];
   tournamentTitle: string;
   numPlayers: number;
 }>();
@@ -14,10 +18,21 @@ function getImagePath(character: string | undefined, color: string | undefined):
   return `./character-portraits/${character}/${color}.png`;
 }
 
+function getStockIconImagePath(character: string | undefined, color: string | undefined): string {
+  return `./stock-icons/${character}/${color}.png`;
+}
+
 function getDefaultImagePath(e: Event): void {
   const target = e.target as HTMLImageElement | null;
   if (target) {
     target.src = `./character-portraits/Random.png`;
+  }
+}
+
+function getDefaultStockIconPath(e: Event): void {
+  const target = e.target as HTMLImageElement | null;
+  if (target) {
+    target.src = `./stock-icons/blank.png`;
   }
 }
 </script>
@@ -31,6 +46,18 @@ function getDefaultImagePath(e: Event): void {
         class="character-image"
         @error="getDefaultImagePath"
       />
+      <img
+        :src="
+          getStockIconImagePath(props.secondaryCharacters[0], props.secondaryCharacterColors[0])
+        "
+        class="secondary-character-image"
+        @error="getDefaultStockIconPath"
+      />
+      <img
+        :src="getStockIconImagePath(props.tertiaryCharacters[0], props.tertiaryCharacterColors[0])"
+        class="tertiary-character-image"
+        @error="getDefaultStockIconPath"
+      />
       <p class="player-name">{{ props.playerNames[0] }}</p>
     </div>
     <div class="character-frame" id="frame2" v-if="props.numPlayers >= 2">
@@ -38,6 +65,18 @@ function getDefaultImagePath(e: Event): void {
         :src="getImagePath(props.characters[1], props.characterColors[1])"
         class="character-image"
         @error="getDefaultImagePath"
+      />
+      <img
+        :src="
+          getStockIconImagePath(props.secondaryCharacters[1], props.secondaryCharacterColors[1])
+        "
+        class="secondary-character-image"
+        @error="getDefaultStockIconPath"
+      />
+      <img
+        :src="getStockIconImagePath(props.tertiaryCharacters[1], props.tertiaryCharacterColors[1])"
+        class="tertiary-character-image"
+        @error="getDefaultStockIconPath"
       />
       <p class="player-name">{{ props.playerNames[1] }}</p>
     </div>
@@ -47,6 +86,18 @@ function getDefaultImagePath(e: Event): void {
         class="character-image"
         @error="getDefaultImagePath"
       />
+      <img
+        :src="
+          getStockIconImagePath(props.secondaryCharacters[2], props.secondaryCharacterColors[2])
+        "
+        class="secondary-character-image"
+        @error="getDefaultStockIconPath"
+      />
+      <img
+        :src="getStockIconImagePath(props.tertiaryCharacters[2], props.tertiaryCharacterColors[2])"
+        class="tertiary-character-image"
+        @error="getDefaultStockIconPath"
+      />
       <p class="player-name">{{ props.playerNames[2] }}</p>
     </div>
     <div class="character-frame" id="frame4" v-if="props.numPlayers >= 4">
@@ -54,6 +105,18 @@ function getDefaultImagePath(e: Event): void {
         :src="getImagePath(props.characters[3], props.characterColors[3])"
         class="character-image"
         @error="getDefaultImagePath"
+      />
+      <img
+        :src="
+          getStockIconImagePath(props.secondaryCharacters[3], props.secondaryCharacterColors[3])
+        "
+        class="secondary-character-image"
+        @error="getDefaultStockIconPath"
+      />
+      <img
+        :src="getStockIconImagePath(props.tertiaryCharacters[3], props.tertiaryCharacterColors[3])"
+        class="tertiary-character-image"
+        @error="getDefaultStockIconPath"
       />
       <p class="player-name">{{ props.playerNames[3] }}</p>
     </div>
@@ -63,6 +126,18 @@ function getDefaultImagePath(e: Event): void {
         class="character-image"
         @error="getDefaultImagePath"
       />
+      <img
+        :src="
+          getStockIconImagePath(props.secondaryCharacters[4], props.secondaryCharacterColors[4])
+        "
+        class="secondary-character-image"
+        @error="getDefaultStockIconPath"
+      />
+      <img
+        :src="getStockIconImagePath(props.tertiaryCharacters[4], props.tertiaryCharacterColors[4])"
+        class="tertiary-character-image"
+        @error="getDefaultStockIconPath"
+      />
       <p class="player-name">{{ props.playerNames[4] }}</p>
     </div>
     <div class="character-frame" id="frame6" v-if="props.numPlayers >= 6">
@@ -70,6 +145,18 @@ function getDefaultImagePath(e: Event): void {
         :src="getImagePath(props.characters[5], props.characterColors[5])"
         class="character-image"
         @error="getDefaultImagePath"
+      />
+      <img
+        :src="
+          getStockIconImagePath(props.secondaryCharacters[5], props.secondaryCharacterColors[5])
+        "
+        class="secondary-character-image"
+        @error="getDefaultStockIconPath"
+      />
+      <img
+        :src="getStockIconImagePath(props.tertiaryCharacters[5], props.tertiaryCharacterColors[5])"
+        class="tertiary-character-image"
+        @error="getDefaultStockIconPath"
       />
       <p class="player-name">{{ props.playerNames[5] }}</p>
     </div>
@@ -79,6 +166,18 @@ function getDefaultImagePath(e: Event): void {
         class="character-image"
         @error="getDefaultImagePath"
       />
+      <img
+        :src="
+          getStockIconImagePath(props.secondaryCharacters[6], props.secondaryCharacterColors[6])
+        "
+        class="secondary-character-image"
+        @error="getDefaultStockIconPath"
+      />
+      <img
+        :src="getStockIconImagePath(props.tertiaryCharacters[6], props.tertiaryCharacterColors[6])"
+        class="tertiary-character-image"
+        @error="getDefaultStockIconPath"
+      />
       <p class="player-name">{{ props.playerNames[6] }}</p>
     </div>
     <div class="character-frame" id="frame8" v-if="props.numPlayers >= 8">
@@ -86,6 +185,18 @@ function getDefaultImagePath(e: Event): void {
         :src="getImagePath(props.characters[7], props.characterColors[7])"
         class="character-image"
         @error="getDefaultImagePath"
+      />
+      <img
+        :src="
+          getStockIconImagePath(props.secondaryCharacters[7], props.secondaryCharacterColors[7])
+        "
+        class="secondary-character-image"
+        @error="getDefaultStockIconPath"
+      />
+      <img
+        :src="getStockIconImagePath(props.tertiaryCharacters[7], props.tertiaryCharacterColors[7])"
+        class="tertiary-character-image"
+        @error="getDefaultStockIconPath"
       />
       <p class="player-name">{{ props.playerNames[7] }}</p>
     </div>
