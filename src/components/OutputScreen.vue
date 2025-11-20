@@ -11,6 +11,8 @@ const props = defineProps<{
   tertiaryCharacters: string[];
   tertiaryCharacterColors: string[];
   tournamentTitle: string;
+  tournamentInfo: string;
+  tournamentURL: string;
   numPlayers: number;
 }>();
 
@@ -38,6 +40,9 @@ function getDefaultStockIconPath(e: Event): void {
 </script>
 
 <template>
+  <button class="btn m-4 btn-primary" @click="exportAsImage(input, 'exported-graphic')">
+    Export as Image
+  </button>
   <div ref="exportRef" class="canvas">
     <h1 class="tournament-title">{{ tournamentTitle }}</h1>
     <div class="character-frame" id="frame1" v-if="props.numPlayers >= 1">
@@ -200,8 +205,9 @@ function getDefaultStockIconPath(e: Event): void {
       />
       <p class="player-name">{{ props.playerNames[7] }}</p>
     </div>
+    <h2 class="tournament-info">{{ tournamentInfo }}</h2>
+    <h2 class="tournament-url">{{ tournamentURL }}</h2>
   </div>
-  <button class="btn" @click="exportAsImage(input, 'test-image')">Export as Image</button>
 </template>
 
 <style>

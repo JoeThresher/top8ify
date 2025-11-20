@@ -15,6 +15,8 @@ const tertiaryCharacterColors = ref<string[]>(Array(8).fill(''));
 const url = ref<string>('');
 const token = ref<string>('');
 const tournamentTitle = ref<string>('');
+const tournamentInfo = ref<string>('');
+const tournamentURL = ref<string>('');
 const advancedOptions = ref<boolean>(false);
 const numPlayers = ref<number>(8);
 
@@ -129,10 +131,16 @@ async function fetchStartGGData() {
         type="text"
         class="input"
         placeholder="16 Entrants - 704 W. High St, Urbana, IL 61801"
+        v-model="tournamentInfo"
       />
 
       <label class="label">URL</label>
-      <input type="text" class="input" placeholder="https://start.gg/prodigy" />
+      <input
+        type="text"
+        class="input"
+        placeholder="https://start.gg/prodigy"
+        v-model="tournamentURL"
+      />
       <button class="btn" @click="advancedOptions = !advancedOptions">Show Advanced Options</button>
     </fieldset>
   </div>
@@ -145,7 +153,7 @@ async function fetchStartGGData() {
   <p>DEBUG: Secondary character colors: {{ secondaryCharacterColors }}</p>
   <p>DEBUG: Tertiary characters: {{ tertiaryCharacters }}</p>
   <p>DEBUG: Tertiary character colors: {{ tertiaryCharacterColors }}</p> -->
-  <div class="grid place-items-center">
+  <div class="grid place-items-center m-4">
     <OutputScreen
       :playerNames="playerNames"
       :characters="characters"
@@ -155,6 +163,8 @@ async function fetchStartGGData() {
       :tertiaryCharacters="tertiaryCharacters"
       :tertiaryCharacterColors="tertiaryCharacterColors"
       :tournamentTitle="tournamentTitle"
+      :tournamentInfo="tournamentInfo"
+      :tournamentURL="tournamentURL"
       :numPlayers="numPlayers"
     />
   </div>
