@@ -12,6 +12,7 @@ const url = ref<string>('');
 const token = ref<string>('');
 const tournamentTitle = ref<string>('');
 const advancedOptions = ref<boolean>(false);
+const numPlayers = ref<number>(8);
 
 onMounted(() => {
   token.value = window.electron.store.get('apiToken');
@@ -30,7 +31,6 @@ async function fetchStartGGData() {
   <div class="p-4 space-y-4 m-4 grid place-items-center">
     <p>Start GG Import</p>
     <input type="text" placeholder="Enter Start GG URL here" class="input" v-model="url" />
-    <input type="text" placeholder="Start GG Token" class="input" v-model="token" />
     <button class="btn" @click="fetchStartGGData()">Fetch StartGG Data</button>
     <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
       <CharacterSelect
@@ -101,7 +101,7 @@ async function fetchStartGGData() {
     </fieldset>
   </div>
 
-  <SettingsMenu v-if="advancedOptions" v-model:apiToken="token" />
+  <SettingsMenu v-if="advancedOptions" v-model:apiToken="token" v-model:numPlayers="numPlayers" />
   <!-- <p>DEBUG: Characters selected: {{ characters }}</p>
   <p>DEBUG: Player names: {{ playerNames }}</p>
   <p>DEBUG: Character colors: {{ characterColors }}</p> -->
@@ -111,6 +111,7 @@ async function fetchStartGGData() {
       :characters="characters"
       :characterColors="characterColors"
       :tournamentTitle="tournamentTitle"
+      :numPlayers="numPlayers"
     />
   </div>
 </template>
