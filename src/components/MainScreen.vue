@@ -138,13 +138,13 @@ async function fetchStartGGData() {
   </div>
 
   <SettingsMenu v-if="advancedOptions" v-model:apiToken="token" v-model:numPlayers="numPlayers" />
-  <p>DEBUG: Characters selected: {{ characters }}</p>
+  <!-- <p>DEBUG: Characters selected: {{ characters }}</p>
   <p>DEBUG: Player names: {{ playerNames }}</p>
   <p>DEBUG: Character colors: {{ characterColors }}</p>
-  <p>DEBUAG: Secondary characters: {{ secondaryCharacters }}</p>
+  <p>DEBUG: Secondary characters: {{ secondaryCharacters }}</p>
   <p>DEBUG: Secondary character colors: {{ secondaryCharacterColors }}</p>
   <p>DEBUG: Tertiary characters: {{ tertiaryCharacters }}</p>
-  <p>DEBUG: Tertiary character colors: {{ tertiaryCharacterColors }}</p>
+  <p>DEBUG: Tertiary character colors: {{ tertiaryCharacterColors }}</p> -->
   <div class="grid place-items-center">
     <OutputScreen
       :playerNames="playerNames"

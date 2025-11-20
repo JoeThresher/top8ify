@@ -1,7 +1,35 @@
-# top8ify
+# Top8ify
 
-A top 8 graphic generator for Super Smash Bros. Melee
+## An infinately customizable top 8 graphic generator for Super Smash Bros. Melee
 
-# This project is very under-development!!
+Top8ify is a top 8 graphic generator for Super Smash Bros. Melee, with the goal of being fast, user friendly, and extremely customizable. I wrote this program because I felt tournament organizers needed a better solution for generating custom top 8 graphics, especially if a graphic needs to be made every week for a weekly tournament.
 
-The goal of this project is to allow for users to create custom Top 8 graphics for Melee tournaments. This is a fully open-source web application that aims to be highly customizable, fast and reactive. Written using Vue, TailwindCSS, and DaisyUI
+## Features
+
+- Sleek, modern, easy-to-use UI
+- Import tournament details from StartGG
+- Main, secondary and tertiary characters for each player
+- Fully customizable graphic generation with user-updated CSS stylesheets
+- Saving user preferences for faster repeated graphic generation
+- Live updates as you enter data
+- Decrease player count for smaller tournaments featuring less than 8 players
+
+## Usage
+
+If you have used a top 8 graphic generator before, the UI will be very familiar. Tournament name and player standings can be imported with a link to the event on StartGG. Characters and character colors can be entered for each player. When graphic is ready for export, simply press the export button and a file dialog will allow you to download it.
+
+In the Advanced settings section, your StartGG token can be entered to allow use of importing from StartGG. Saving your settings will save the token for next time you open the program. Generate a StartGG token by following [these instructions](https://developer.start.gg/docs/authentication)
+
+## Build Instructions
+
+### Requirements
+
+- [Git](https://git-scm.com/downloads)
+- [Node](https://nodejs.org/en/)
+
+### Build Steps
+
+- Clone the repo via: `git clone https://github.com/JoeThresher/top8ify.git`
+- Navigate into the directory and run: `npm install` to install all dependencies
+- Use `npm run start` to run the app in develop mode
+- Use `npm run package` to build a release
