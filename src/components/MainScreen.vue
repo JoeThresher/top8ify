@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import CharacterSelect from './CharacterSelect.vue';
 import OutputScreen from './OutputScreen.vue';
 import fetchTournamentDetails from '../utils/api';
@@ -12,6 +12,10 @@ const url = ref<string>('');
 const token = ref<string>('');
 const tournamentTitle = ref<string>('');
 const advancedOptions = ref<boolean>(false);
+
+onMounted(() => {
+  token.value = window.electron.store.get('apiToken');
+});
 
 async function fetchStartGGData() {
   const tournmanetDetails = await fetchTournamentDetails(url.value, token.value);
