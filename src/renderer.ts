@@ -42,3 +42,21 @@ const app = createApp(App).use(Vue3Toastify, {
 app.use(router);
 
 app.mount('#app');
+
+// Load any user-provided custom CSS stored by the main process and inject it
+(async () => {
+  try {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    const res = await window.electron?.loadCustomCss?.();
+    if (res && res.exists && res.content) {
+      const style = document.createElement('style');
+      style.setAttribute('data-user-custom-css', 'true');
+      style.textContent = res.content;
+      document.head.appendChild(style);
+      console.log('Custom CSS loaded from user data.');
+    }
+  } catch (err) {
+    console.warn('No custom CSS loaded:', err);
+  }
+})();

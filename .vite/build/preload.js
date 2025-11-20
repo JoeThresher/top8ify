@@ -9,6 +9,19 @@ electron.contextBridge.exposeInMainWorld("electron", {
       electron.ipcRenderer.send("electron-store-set", property, val);
     }
     // Other method you want to add like has(), reset(), etc.
+  },
+  // Custom CSS APIs
+  saveCustomCss: async (cssContent) => {
+    return await electron.ipcRenderer.invoke("save-custom-css", cssContent);
+  },
+  loadCustomCss: async () => {
+    return await electron.ipcRenderer.invoke("load-custom-css");
+  },
+  getCustomCssPath: async () => {
+    return await electron.ipcRenderer.invoke("get-custom-css-path");
+  },
+  restoreOriginalCss: async () => {
+    return await electron.ipcRenderer.invoke("restore-original-css");
   }
   // Any other methods you want to expose in the window object.
   // ...

@@ -1,5 +1,6 @@
 import { app, BrowserWindow, ipcMain } from 'electron';
 import path from 'node:path';
+import fs from 'node:fs/promises';
 import started from 'electron-squirrel-startup';
 import Store from 'electron-store';
 
@@ -66,4 +67,91 @@ ipcMain.on('electron-store-get', async (event, val) => {
 ipcMain.on('electron-store-set', async (event, key, val) => {
   console.log('Setting value for key:', key, 'to', val);
   store.set(key, val);
+});
+
+// Prefer to edit the project's `src/assets/graphicScreen.css` when available (dev mode).
+// If that file isn't available/writable (packaged or missing), fall back to saving in userData.
+const projectGraphicPath = path.resolve(process.cwd(), 'src', 'assets', 'graphicScreen.css');
+const fallbackName = 'graphicScreen.css';
+const backupName = 'graphicScreen.original.css';
+const backupPath = () => path.join(app.getPath('userData'), backupName);
+
+async function resolveGraphicCssPath() {
+  try {
+    // check if project asset exists
+    await fs.access(projectGraphicPath);
+    return { path: projectGraphicPath, location: 'project' };
+  } catch {
+    // fallback to userData
+    const userPath = path.join(app.getPath('userData'), fallbackName);
+    return { path: userPath, location: 'userData' };
+  }
+}
+
+ipcMain.handle('save-custom-css', async (event, cssContent) => {
+  try {
+    const info = await resolveGraphicCssPath();
+    // If we're about to overwrite the project file, save a backup of the original if not already present
+    if (info.location === 'project') {
+      try {
+        await fs.access(backupPath());
+        // backup exists
+      } catch {
+        try {
+          const original = await fs.readFile(info.path, 'utf8');
+          await fs.writeFile(backupPath(), original, 'utf8');
+        } catch (e) {
+          // ignore backup failure but log
+          console.warn('Could not create backup of original graphicScreen.css:', e);
+        }
+      }
+    }
+
+    await fs.writeFile(info.path, cssContent, 'utf8');
+    return { success: true, path: info.path, location: info.location };
+  } catch (err) {
+    console.error('Failed to save graphicScreen.css:', err);
+    return { success: false, error: String(err) };
+  }
+});
+
+// Restore original CSS (if a backup exists). This will prefer restoring to project asset when available,
+// otherwise it will restore to the userData fallback path.
+ipcMain.handle('restore-original-css', async () => {
+  try {
+    const bPath = backupPath();
+    await fs.access(bPath);
+    const original = await fs.readFile(bPath, 'utf8');
+    // Determine current target path (project if exists, else userData)
+    let targetInfo = await resolveGraphicCssPath();
+    // If project file doesn't exist but backup was created from project, attempt to restore to project path
+    try {
+      await fs.access(projectGraphicPath);
+      targetInfo = { path: projectGraphicPath, location: 'project' };
+    } catch {
+      // keep resolved path
+    }
+
+    await fs.writeFile(targetInfo.path, original, 'utf8');
+    return { success: true, path: targetInfo.path, location: targetInfo.location };
+  } catch (err) {
+    console.error('Failed to restore original graphicScreen.css:', err);
+    return { success: false, error: String(err) };
+  }
+});
+
+ipcMain.handle('load-custom-css', async () => {
+  try {
+    const info = await resolveGraphicCssPath();
+    const content = await fs.readFile(info.path, 'utf8');
+    return { exists: true, content, path: info.path, location: info.location };
+  } catch (err) {
+    // File might not exist in either location
+    return { exists: false, error: String(err) };
+  }
+});
+
+ipcMain.handle('get-custom-css-path', async () => {
+  const info = await resolveGraphicCssPath();
+  return info.path;
 });

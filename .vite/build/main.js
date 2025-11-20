@@ -13,6 +13,7 @@ var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "acce
 var _validator, _encryptionKey, _options, _defaultValues, _isInMigration, _watcher, _watchFile, _debouncedChangeHandler, _Conf_instances, prepareOptions_fn, setupValidator_fn, captureSchemaDefaults_fn, applyDefaultValues_fn, configureSerialization_fn, resolvePath_fn, initializeStore_fn, runMigrations_fn;
 const electron = require("electron");
 const path$1 = require("node:path");
+const fs$1 = require("node:fs/promises");
 const require$$0$2 = require("path");
 const require$$1$2 = require("child_process");
 const require$$0$1 = require("tty");
@@ -10946,4 +10947,70 @@ electron.ipcMain.on("electron-store-get", async (event, val) => {
 electron.ipcMain.on("electron-store-set", async (event, key, val) => {
   console.log("Setting value for key:", key, "to", val);
   store.set(key, val);
+});
+const projectGraphicPath = path$1.resolve(process.cwd(), "src", "assets", "graphicScreen.css");
+const fallbackName = "graphicScreen.css";
+const backupName = "graphicScreen.original.css";
+const backupPath = () => path$1.join(electron.app.getPath("userData"), backupName);
+async function resolveGraphicCssPath() {
+  try {
+    await fs$1.access(projectGraphicPath);
+    return { path: projectGraphicPath, location: "project" };
+  } catch {
+    const userPath = path$1.join(electron.app.getPath("userData"), fallbackName);
+    return { path: userPath, location: "userData" };
+  }
+}
+electron.ipcMain.handle("save-custom-css", async (event, cssContent) => {
+  try {
+    const info = await resolveGraphicCssPath();
+    if (info.location === "project") {
+      try {
+        await fs$1.access(backupPath());
+      } catch {
+        try {
+          const original = await fs$1.readFile(info.path, "utf8");
+          await fs$1.writeFile(backupPath(), original, "utf8");
+        } catch (e) {
+          console.warn("Could not create backup of original graphicScreen.css:", e);
+        }
+      }
+    }
+    await fs$1.writeFile(info.path, cssContent, "utf8");
+    return { success: true, path: info.path, location: info.location };
+  } catch (err) {
+    console.error("Failed to save graphicScreen.css:", err);
+    return { success: false, error: String(err) };
+  }
+});
+electron.ipcMain.handle("restore-original-css", async () => {
+  try {
+    const bPath = backupPath();
+    await fs$1.access(bPath);
+    const original = await fs$1.readFile(bPath, "utf8");
+    let targetInfo = await resolveGraphicCssPath();
+    try {
+      await fs$1.access(projectGraphicPath);
+      targetInfo = { path: projectGraphicPath, location: "project" };
+    } catch {
+    }
+    await fs$1.writeFile(targetInfo.path, original, "utf8");
+    return { success: true, path: targetInfo.path, location: targetInfo.location };
+  } catch (err) {
+    console.error("Failed to restore original graphicScreen.css:", err);
+    return { success: false, error: String(err) };
+  }
+});
+electron.ipcMain.handle("load-custom-css", async () => {
+  try {
+    const info = await resolveGraphicCssPath();
+    const content2 = await fs$1.readFile(info.path, "utf8");
+    return { exists: true, content: content2, path: info.path, location: info.location };
+  } catch (err) {
+    return { exists: false, error: String(err) };
+  }
+});
+electron.ipcMain.handle("get-custom-css-path", async () => {
+  const info = await resolveGraphicCssPath();
+  return info.path;
 });
