@@ -23,6 +23,15 @@ module.exports = {
       name: '@electron-forge/maker-rpm',
       config: {},
     },
+    // {
+    //   name: '@electron-forge/maker-flatpak',
+    //   config: {
+    //     options: {
+    //       categories: ['Video'],
+    //       mimeType: ['video/h264'],
+    //     },
+    //   },
+    // },
   ],
   plugins: [
     {
