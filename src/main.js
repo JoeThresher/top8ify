@@ -1,4 +1,4 @@
-import { app, BrowserWindow, ipcMain } from 'electron';
+import { app, BrowserWindow, ipcMain, shell } from 'electron';
 import path from 'node:path';
 import fs from 'node:fs/promises';
 import started from 'electron-squirrel-startup';
@@ -67,6 +67,12 @@ ipcMain.on('electron-store-get', async (event, val) => {
 ipcMain.on('electron-store-set', async (event, key, val) => {
   console.log('Setting value for key:', key, 'to', val);
   store.set(key, val);
+});
+
+// Open external link in default browser
+ipcMain.on('open-external-link', async (event, url) => {
+  console.log('Opening external link:', url);
+  shell.openExternal(url);
 });
 
 // Prefer to edit the project's `src/assets/graphicScreen.css` when available (dev mode).

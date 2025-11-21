@@ -10947,6 +10947,10 @@ electron.ipcMain.on("electron-store-set", async (event, key, val) => {
   console.log("Setting value for key:", key, "to", val);
   store.set(key, val);
 });
+electron.ipcMain.on("open-external-link", async (event, url) => {
+  console.log("Opening external link:", url);
+  electron.shell.openExternal(url);
+});
 const customFileName = "graphicScreen.css";
 const backupName = "graphicScreen.original.css";
 const backupPath = () => path$1.join(electron.app.getPath("userData"), backupName);

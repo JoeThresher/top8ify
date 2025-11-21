@@ -2,7 +2,17 @@
   width: 1280px;
   height: 720px;
   border: 2px solid #000;
-  background-image: url('/graphic/background.jpg');
+  background-image: url('/graphic/background.jpg'); /* Change this to a URL if you want to use a custom background */
+  display: flex;
+  flex-direction: column;
+}
+
+.character-frames-container {
+  display: grid;
+  place-content: center;
+  grid: auto / repeat(4, 1fr);
+  margin-top: 0px;
+  margin-left: 60px;
 }
 
 .character-frame {
@@ -10,8 +20,8 @@
   height: 300px;
   border: 2px solid #fff;
   margin: 10px;
-  float: left;
   background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 5px;
 }
 
 .character-frame .character-image {
@@ -19,9 +29,20 @@
   height: auto;
 }
 
+.player-name-frame {
+  width: 200px;
+  height: 30px;
+  background-color: rgba(255, 255, 255, 1);
+  position: relative;
+  top: -10px;
+  left: -2px;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
 .player-name {
   text-align: center;
-  color: #fff;
+  color: #000;
   font-size: 18px;
   margin-top: 5px;
 }
@@ -49,12 +70,14 @@
   text-align: start;
   color: #fff;
   font-size: 20px;
-  margin-top: 5px;
+  margin-left: 30px;
 }
 
 .tournament-url {
   text-align: end;
   color: #fff;
   font-size: 20px;
-  margin-top: 5px;
+  position: relative;
+  bottom: 30px;
+  margin-right: 30px;
 }

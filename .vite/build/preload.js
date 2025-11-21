@@ -22,6 +22,10 @@ electron.contextBridge.exposeInMainWorld("electron", {
   },
   restoreOriginalCss: async () => {
     return await electron.ipcRenderer.invoke("restore-original-css");
+  },
+  openExternalLink(url) {
+    console.log("Requesting to open external link:", url);
+    electron.ipcRenderer.send("open-external-link", url);
   }
   // Any other methods you want to expose in the window object.
   // ...

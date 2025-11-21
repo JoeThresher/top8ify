@@ -26,6 +26,7 @@ declare global {
         location?: string;
         error?: string;
       }>;
+      openExternalLink: (url: string) => void;
     };
   }
 }
@@ -124,6 +125,10 @@ async function removeCustomCss() {
   }
 }
 
+function openLink(url: string) {
+  window.electron.openExternalLink(url);
+}
+
 // refresh status on component mount
 onMounted(() => {
   refreshCustomCssStatus();
@@ -136,6 +141,14 @@ onMounted(() => {
       <fieldset class="fieldset">
         <legend class="fieldset-legend">Start GG API Token</legend>
         <input type="text" class="input" placeholder="Type here" v-model="apiToken" />
+        <div class="text-xs text-muted">
+          <button
+            class="btn btn-link"
+            @click="openLink('https://developer.start.gg/docs/authentication')"
+          >
+            How do I find my API token?
+          </button>
+        </div>
       </fieldset>
 
       <fieldset class="fieldset">
