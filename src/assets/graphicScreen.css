@@ -22,6 +22,7 @@
   margin: 10px;
   background-color: rgba(0, 0, 0, 0.5);
   border-radius: 5px;
+  position: relative;
 }
 
 .character-frame .character-image {
@@ -48,15 +49,15 @@
 }
 
 .character-frame .secondary-character-image {
-  position: relative;
+  position: absolute;
   left: 165px;
-  top: -265px;
+  top: 6px;
 }
 
 .character-frame .tertiary-character-image {
-  position: relative;
+  position: absolute;
   left: 165px;
-  top: -260px;
+  top: 35px;
 }
 
 .tournament-title {
@@ -80,4 +81,14 @@
   position: relative;
   bottom: 30px;
   margin-right: 30px;
+}
+
+.placement-number {
+  position: absolute;
+  top: 0px;
+  left: 15px;
+  font-size: 32px;
+  font-weight: bold;
+  color: #fff;
+  text-shadow: 1px 1px 2px #000;
 }

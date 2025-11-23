@@ -48,6 +48,7 @@ function getDefaultStockIconPath(e: Event): void {
 
     <div class="character-frames-container">
       <div class="character-frame" id="frame1" v-if="props.numPlayers >= 1">
+        <p class="placement-number">1</p>
         <img
           :src="getImagePath(props.characters[0], props.characterColors[0])"
           class="character-image"
@@ -71,7 +72,9 @@ function getDefaultStockIconPath(e: Event): void {
           <p class="player-name">{{ props.playerNames[0] }}</p>
         </div>
       </div>
+
       <div class="character-frame" id="frame2" v-if="props.numPlayers >= 2">
+        <p class="placement-number">2</p>
         <img
           :src="getImagePath(props.characters[1], props.characterColors[1])"
           class="character-image"
@@ -95,7 +98,9 @@ function getDefaultStockIconPath(e: Event): void {
           <p class="player-name">{{ props.playerNames[1] }}</p>
         </div>
       </div>
+
       <div class="character-frame" id="frame3" v-if="props.numPlayers >= 3">
+        <p class="placement-number">3</p>
         <img
           :src="getImagePath(props.characters[2], props.characterColors[2])"
           class="character-image"
@@ -119,7 +124,9 @@ function getDefaultStockIconPath(e: Event): void {
           <p class="player-name">{{ props.playerNames[2] }}</p>
         </div>
       </div>
+
       <div class="character-frame" id="frame4" v-if="props.numPlayers >= 4">
+        <p class="placement-number">4</p>
         <img
           :src="getImagePath(props.characters[3], props.characterColors[3])"
           class="character-image"
@@ -143,7 +150,9 @@ function getDefaultStockIconPath(e: Event): void {
           <p class="player-name">{{ props.playerNames[3] }}</p>
         </div>
       </div>
+
       <div class="character-frame" id="frame5" v-if="props.numPlayers >= 5">
+        <p class="placement-number">5</p>
         <img
           :src="getImagePath(props.characters[4], props.characterColors[4])"
           class="character-image"
@@ -167,7 +176,9 @@ function getDefaultStockIconPath(e: Event): void {
           <p class="player-name">{{ props.playerNames[4] }}</p>
         </div>
       </div>
+
       <div class="character-frame" id="frame6" v-if="props.numPlayers >= 6">
+        <p class="placement-number">5</p>
         <img
           :src="getImagePath(props.characters[5], props.characterColors[5])"
           class="character-image"
@@ -191,7 +202,9 @@ function getDefaultStockIconPath(e: Event): void {
           <p class="player-name">{{ props.playerNames[5] }}</p>
         </div>
       </div>
+
       <div class="character-frame" id="frame7" v-if="props.numPlayers >= 7">
+        <p class="placement-number">7</p>
         <img
           :src="getImagePath(props.characters[6], props.characterColors[6])"
           class="character-image"
@@ -215,7 +228,9 @@ function getDefaultStockIconPath(e: Event): void {
           <p class="player-name">{{ props.playerNames[6] }}</p>
         </div>
       </div>
+
       <div class="character-frame" id="frame8" v-if="props.numPlayers >= 8">
+        <p class="placement-number">7</p>
         <img
           :src="getImagePath(props.characters[7], props.characterColors[7])"
           class="character-image"
