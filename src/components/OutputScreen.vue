@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useTemplateRef, ref, onMounted, watch } from 'vue';
+import { useTemplateRef, ref, onMounted } from 'vue';
 import exportAsImage from '../utils/exportAsImage';
 const input = useTemplateRef('exportRef');
 const logoDataUrl = ref<string>('');
@@ -53,6 +53,27 @@ onMounted(async () => {
     console.warn('Failed to load custom logo:', err);
   }
 });
+
+// Function to reload the custom logo dynamically
+const reloadLogo = async () => {
+  try {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    const res = await window.electron?.loadCustomLogo?.();
+    if (res && res.exists && res.content) {
+      logoDataUrl.value = res.content;
+    }
+  } catch (err) {
+    console.warn('Failed to reload custom logo:', err);
+  }
+};
+
+// Expose reloadLogo globally so fileOperations can call it
+if (typeof window !== 'undefined') {
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  window.reloadLogoOnOutputScreen = reloadLogo;
+}
 </script>
 
 <template>

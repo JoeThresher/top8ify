@@ -138,11 +138,15 @@ export async function onFileSelectedIcon(e: Event) {
       // @ts-ignore
       const res = await window.electron.saveCustomLogo(dataUrl);
       if (res && res.success) {
-        toast.success('Custom logo uploaded and saved. Reloading...');
-        // Reload the page after a short delay to ensure toast is visible
-        setTimeout(() => {
-          window.location.reload();
-        }, 500);
+        toast.success('Custom logo uploaded and saved.');
+        // Dynamically reload the logo on OutputScreen instead of full page reload
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        if (window.reloadLogoOnOutputScreen) {
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          window.reloadLogoOnOutputScreen();
+        }
       } else {
         toast.error('Failed to save custom logo: ' + (res?.error || 'unknown'));
       }
