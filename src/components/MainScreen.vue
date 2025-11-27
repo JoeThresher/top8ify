@@ -23,7 +23,8 @@ const hideTournamentLogo = ref<boolean>(false);
 const tournamentLogoPath = ref<string>('./graphic/tournament-logo.jpg');
 
 onMounted(() => {
-  token.value = window.electron.store.get('apiToken');
+  token.value = (window.electron.store.get('apiToken') as string) || '';
+  hideTournamentLogo.value = (window.electron.store.get('hideTournamentLogo') as boolean) || false;
 });
 
 async function fetchStartGGData() {

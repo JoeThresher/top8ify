@@ -17,6 +17,7 @@ const hideTournamentLogo = defineModel<boolean>('hideTournamentLogo');
 
 function saveSettings() {
   window.electron.store.set('apiToken', apiToken.value);
+  window.electron.store.set('hideTournamentLogo', hideTournamentLogo.value);
   toast.success('Settings saved successfully!');
 }
 
@@ -118,7 +119,8 @@ onMounted(() => {
       </fieldset>
 
       <fieldset class="fieldset">
-        <legend class="fieldset-legend">Hide Tournament Logo</legend>
+        <legend class="fieldset-legend">Display elements</legend>
+        <div class="text-xs text-muted">Hide tournament logo</div>
         <input type="checkbox" class="checkbox" v-model="hideTournamentLogo" />
       </fieldset>
     </div>
