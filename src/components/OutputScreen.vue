@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { useTemplateRef } from 'vue';
+import { useTemplateRef, ref, onMounted, watch } from 'vue';
 import exportAsImage from '../utils/exportAsImage';
 const input = useTemplateRef('exportRef');
+const logoDataUrl = ref<string>('');
 const props = defineProps<{
   characters: string[];
   playerNames: string[];
@@ -39,6 +40,19 @@ function getDefaultStockIconPath(e: Event): void {
     target.src = `./stock-icons/blank.png`;
   }
 }
+
+onMounted(async () => {
+  try {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    const res = await window.electron?.loadCustomLogo?.();
+    if (res && res.exists && res.content) {
+      logoDataUrl.value = res.content;
+    }
+  } catch (err) {
+    console.warn('Failed to load custom logo:', err);
+  }
+});
 </script>
 
 <template>
@@ -48,7 +62,7 @@ function getDefaultStockIconPath(e: Event): void {
   <div ref="exportRef" class="canvas">
     <img
       class="tournament-logo"
-      :src="tournamentLogoPath"
+      :src="logoDataUrl || tournamentLogoPath"
       alt=""
       v-if="hideTournamentLogo === false"
     />

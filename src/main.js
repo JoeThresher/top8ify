@@ -182,10 +182,14 @@ ipcMain.handle('save-custom-logo', async (event, dataUrl) => {
 ipcMain.handle('load-custom-logo', async () => {
   try {
     const info = await resolveGraphicLogoPath();
-    // Read as binary and return as Base64 for safe transmission
+    // Read as binary and return as Data URL for direct use in img src
     const buffer = await fs.readFile(info.path);
     const base64Content = buffer.toString('base64');
-    return { exists: true, content: base64Content, path: info.path, location: info.location };
+    // Determine MIME type from file extension
+    const ext = path.extname(info.path).toLowerCase();
+    const mimeType = ext === '.png' ? 'image/png' : 'image/jpeg';
+    const dataUrl = `data:${mimeType};base64,${base64Content}`;
+    return { exists: true, content: dataUrl, path: info.path, location: info.location };
   } catch (err) {
     // File might not exist in either location
     return { exists: false, error: String(err) };

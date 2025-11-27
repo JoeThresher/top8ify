@@ -138,7 +138,11 @@ export async function onFileSelectedIcon(e: Event) {
       // @ts-ignore
       const res = await window.electron.saveCustomLogo(dataUrl);
       if (res && res.success) {
-        toast.success('Custom logo uploaded and saved.');
+        toast.success('Custom logo uploaded and saved. Reloading...');
+        // Reload the page after a short delay to ensure toast is visible
+        setTimeout(() => {
+          window.location.reload();
+        }, 500);
       } else {
         toast.error('Failed to save custom logo: ' + (res?.error || 'unknown'));
       }

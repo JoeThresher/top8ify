@@ -11031,7 +11031,10 @@ electron.ipcMain.handle("load-custom-logo", async () => {
     const info = await resolveGraphicLogoPath();
     const buffer = await fs$1.readFile(info.path);
     const base64Content = buffer.toString("base64");
-    return { exists: true, content: base64Content, path: info.path, location: info.location };
+    const ext = path$1.extname(info.path).toLowerCase();
+    const mimeType = ext === ".png" ? "image/png" : "image/jpeg";
+    const dataUrl = `data:${mimeType};base64,${base64Content}`;
+    return { exists: true, content: dataUrl, path: info.path, location: info.location };
   } catch (err) {
     return { exists: false, error: String(err) };
   }
