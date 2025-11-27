@@ -14,9 +14,9 @@ const props = defineProps<{
   tournamentInfo: string;
   tournamentURL: string;
   numPlayers: number;
+  hideTournamentLogo: boolean;
+  tournamentLogoPath: string;
 }>();
-
-const tournamentLogoPath = './graphic/tournament-logo.jpg';
 
 function getImagePath(character: string | undefined, color: string | undefined): string {
   return `./character-portraits/${character}/${color}.png`;
@@ -46,7 +46,12 @@ function getDefaultStockIconPath(e: Event): void {
     Export as Image
   </button>
   <div ref="exportRef" class="canvas">
-    <img class="tournament-logo" :src="tournamentLogoPath" alt="" />
+    <img
+      class="tournament-logo"
+      :src="tournamentLogoPath"
+      alt=""
+      v-if="hideTournamentLogo === false"
+    />
     <h1 class="tournament-title">{{ tournamentTitle }}</h1>
 
     <div class="character-frames-container">

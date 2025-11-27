@@ -10952,10 +10952,15 @@ electron.ipcMain.on("open-external-link", async (event, url) => {
   electron.shell.openExternal(url);
 });
 const customFileName = "graphicScreen.css";
+const customLogoFileName = "tournament-logo.png";
 const backupName = "graphicScreen.original.css";
 const backupPath = () => path$1.join(electron.app.getPath("userData"), backupName);
 async function resolveGraphicCssPath() {
   const userPath = path$1.join(electron.app.getPath("userData"), customFileName);
+  return { path: userPath, location: "userData" };
+}
+async function resolveGraphicLogoPath() {
+  const userPath = path$1.join(electron.app.getPath("userData"), customLogoFileName);
   return { path: userPath, location: "userData" };
 }
 electron.ipcMain.handle("save-custom-css", async (event, cssContent) => {
@@ -11004,5 +11009,34 @@ electron.ipcMain.handle("load-custom-css", async () => {
 });
 electron.ipcMain.handle("get-custom-css-path", async () => {
   const info = await resolveGraphicCssPath();
+  return info.path;
+});
+electron.ipcMain.handle("save-custom-logo", async (event, dataUrl) => {
+  try {
+    const info = await resolveGraphicLogoPath();
+    const base64Data = dataUrl.split(",")[1];
+    if (!base64Data) {
+      throw new Error("Invalid data URL format");
+    }
+    const buffer = Buffer.from(base64Data, "base64");
+    await fs$1.writeFile(info.path, buffer);
+    return { success: true, path: info.path, location: info.location };
+  } catch (err) {
+    console.error("Failed to save tournament-logo.png:", err);
+    return { success: false, error: String(err) };
+  }
+});
+electron.ipcMain.handle("load-custom-logo", async () => {
+  try {
+    const info = await resolveGraphicLogoPath();
+    const buffer = await fs$1.readFile(info.path);
+    const base64Content = buffer.toString("base64");
+    return { exists: true, content: base64Content, path: info.path, location: info.location };
+  } catch (err) {
+    return { exists: false, error: String(err) };
+  }
+});
+electron.ipcMain.handle("get-custom-logo-path", async () => {
+  const info = await resolveGraphicLogoPath();
   return info.path;
 });

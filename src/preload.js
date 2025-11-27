@@ -29,6 +29,15 @@ contextBridge.exposeInMainWorld('electron', {
     console.log('Requesting to open external link:', url);
     ipcRenderer.send('open-external-link', url);
   },
+  saveCustomLogo: async (imagePath) => {
+    return await ipcRenderer.invoke('save-custom-logo', imagePath);
+  },
+  loadCustomLogo: async () => {
+    return await ipcRenderer.invoke('load-custom-logo');
+  },
+  getCustomLogoPath: async () => {
+    return await ipcRenderer.invoke('get-custom-logo-path');
+  },
   // Any other methods you want to expose in the window object.
   // ...
 });

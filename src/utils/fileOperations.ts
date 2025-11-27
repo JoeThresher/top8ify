@@ -29,7 +29,11 @@ declare global {
         location?: string;
         error?: string;
       }>;
-      openExternalLink: (url: string) => void;
+      openExternalLink?: (url: string) => void;
+      saveCustomLogo?: (
+        cssContent: string,
+      ) => Promise<{ success: boolean; path?: string; location?: string; error?: string }>;
+      getCustomLogoPath?: () => Promise<string>;
     };
   }
 }
@@ -47,7 +51,7 @@ export async function refreshCustomCssStatus() {
   }
 }
 
-export async function onFileSelected(e: Event) {
+export async function onFileSelectedCss(e: Event) {
   const input = e.target as HTMLInputElement;
   const file = input?.files?.[0];
   if (!file) return;
@@ -114,4 +118,42 @@ export async function removeCustomCss() {
     console.error(err);
     toast.error('Failed to restore original CSS');
   }
+}
+
+export async function onFileSelectedIcon(e: Event) {
+  const input = e.target as HTMLInputElement;
+  const file = input?.files?.[0];
+  if (!file) return;
+  if (!file.name.endsWith('.png') && !file.name.endsWith('.jpg') && !file.name.endsWith('.jpeg')) {
+    toast.error('Please select a png or jpeg file');
+    return;
+  }
+  uploading.value = true;
+  const reader = new FileReader();
+  reader.onload = async () => {
+    // Read as Data URL (base64-encoded already) for safe transmission
+    const dataUrl = reader.result as string;
+    try {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      const res = await window.electron.saveCustomLogo(dataUrl);
+      if (res && res.success) {
+        toast.success('Custom logo uploaded and saved.');
+      } else {
+        toast.error('Failed to save custom logo: ' + (res?.error || 'unknown'));
+      }
+    } catch (err) {
+      toast.error('Failed to save custom logo');
+      console.error(err);
+    } finally {
+      uploading.value = false;
+      // clear the input so user can re-upload same file if needed
+      if (input) input.value = '';
+    }
+  };
+  reader.onerror = () => {
+    toast.error('Failed to read file');
+    uploading.value = false;
+  };
+  reader.readAsDataURL(file);
 }

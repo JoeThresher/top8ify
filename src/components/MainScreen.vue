@@ -19,6 +19,8 @@ const tournamentInfo = ref<string>('');
 const tournamentURL = ref<string>('');
 const advancedOptions = ref<boolean>(false);
 const numPlayers = ref<number>(8);
+const hideTournamentLogo = ref<boolean>(false);
+const tournamentLogoPath = ref<string>('./graphic/tournament-logo.jpg');
 
 onMounted(() => {
   token.value = window.electron.store.get('apiToken');
@@ -145,7 +147,13 @@ async function fetchStartGGData() {
     </fieldset>
   </div>
 
-  <SettingsMenu v-if="advancedOptions" v-model:apiToken="token" v-model:numPlayers="numPlayers" />
+  <SettingsMenu
+    v-if="advancedOptions"
+    v-model:apiToken="token"
+    v-model:numPlayers="numPlayers"
+    v-model:hideTournamentLogo="hideTournamentLogo"
+    v-model:tournamentLogoPath="tournamentLogoPath"
+  />
   <!-- <p>DEBUG: Characters selected: {{ characters }}</p>
   <p>DEBUG: Player names: {{ playerNames }}</p>
   <p>DEBUG: Character colors: {{ characterColors }}</p>
@@ -166,6 +174,8 @@ async function fetchStartGGData() {
       :tournamentInfo="tournamentInfo"
       :tournamentURL="tournamentURL"
       :numPlayers="numPlayers"
+      :hideTournamentLogo="hideTournamentLogo"
+      :tournamentLogoPath="tournamentLogoPath"
     />
   </div>
 </template>

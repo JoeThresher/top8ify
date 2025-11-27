@@ -79,11 +79,17 @@ ipcMain.on('open-external-link', async (event, url) => {
 // If that file isn't available/writable (packaged or missing), fall back to saving in userData.
 // const projectGraphicPath = path.resolve(process.cwd(), 'src', 'assets', 'graphicScreen.css');
 const customFileName = 'graphicScreen.css';
+const customLogoFileName = 'tournament-logo.png';
 const backupName = 'graphicScreen.original.css';
 const backupPath = () => path.join(app.getPath('userData'), backupName);
 
 async function resolveGraphicCssPath() {
   const userPath = path.join(app.getPath('userData'), customFileName);
+  return { path: userPath, location: 'userData' };
+}
+
+async function resolveGraphicLogoPath() {
+  const userPath = path.join(app.getPath('userData'), customLogoFileName);
   return { path: userPath, location: 'userData' };
 }
 
@@ -152,5 +158,41 @@ ipcMain.handle('load-custom-css', async () => {
 
 ipcMain.handle('get-custom-css-path', async () => {
   const info = await resolveGraphicCssPath();
+  return info.path;
+});
+
+ipcMain.handle('save-custom-logo', async (event, dataUrl) => {
+  try {
+    const info = await resolveGraphicLogoPath();
+    // Extract base64 data from Data URL (format: "data:image/png;base64,xxxxx")
+    const base64Data = dataUrl.split(',')[1];
+    if (!base64Data) {
+      throw new Error('Invalid data URL format');
+    }
+    // Decode Base64 and write as binary
+    const buffer = Buffer.from(base64Data, 'base64');
+    await fs.writeFile(info.path, buffer);
+    return { success: true, path: info.path, location: info.location };
+  } catch (err) {
+    console.error('Failed to save tournament-logo.png:', err);
+    return { success: false, error: String(err) };
+  }
+});
+
+ipcMain.handle('load-custom-logo', async () => {
+  try {
+    const info = await resolveGraphicLogoPath();
+    // Read as binary and return as Base64 for safe transmission
+    const buffer = await fs.readFile(info.path);
+    const base64Content = buffer.toString('base64');
+    return { exists: true, content: base64Content, path: info.path, location: info.location };
+  } catch (err) {
+    // File might not exist in either location
+    return { exists: false, error: String(err) };
+  }
+});
+
+ipcMain.handle('get-custom-logo-path', async () => {
+  const info = await resolveGraphicLogoPath();
   return info.path;
 });

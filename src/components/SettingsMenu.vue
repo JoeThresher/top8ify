@@ -3,14 +3,17 @@ import { toast } from 'vue3-toastify';
 import { onMounted } from 'vue';
 import {
   refreshCustomCssStatus,
-  onFileSelected,
+  onFileSelectedCss,
   removeCustomCss,
   hasCustomCss,
   customCssPath,
+  onFileSelectedIcon,
 } from '../utils/fileOperations';
 
 const apiToken = defineModel<string>('apiToken');
 const numPlayers = defineModel<number>('numPlayers');
+const tournamentLogoPath = defineModel<string>('');
+const hideTournamentLogo = defineModel<boolean>('hideTournamentLogo');
 
 function saveSettings() {
   window.electron.store.set('apiToken', apiToken.value);
@@ -18,7 +21,17 @@ function saveSettings() {
 }
 
 function openLink(url: string) {
-  window.electron.openExternalLink(url);
+  window.electron?.openExternalLink?.(url);
+}
+
+async function handleCustomLogoInput(e: Event) {
+  onFileSelectedIcon(e);
+  const logoPath = (await window.electron.getCustomLogoPath?.()) || '';
+  if (logoPath) {
+    console.log('Logo path: ', logoPath);
+    tournamentLogoPath.value = logoPath;
+    console.log('tournament logo path: ', tournamentLogoPath.value);
+  }
 }
 
 // refresh status on component mount
@@ -32,7 +45,7 @@ onMounted(() => {
     <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
       <fieldset class="fieldset">
         <legend class="fieldset-legend">Start GG API Token</legend>
-        <input type="text" class="input" placeholder="Type here" v-model="apiToken" />
+        <input type="password" class="input" placeholder="Type here" v-model="apiToken" />
         <div class="text-xs text-muted">
           <button
             class="btn btn-link"
@@ -81,7 +94,7 @@ onMounted(() => {
       <fieldset class="fieldset">
         <legend class="fieldset-legend">Custom CSS (graphic screen)</legend>
         <div class="space-y-2">
-          <input type="file" accept=".css" class="file-input" @change="onFileSelected" />
+          <input type="file" accept=".css" class="file-input" @change="onFileSelectedCss" />
           <div class="text-xs text-muted">
             Upload a custom .css file to overwrite the graphic screen styles.
           </div>
@@ -94,6 +107,19 @@ onMounted(() => {
             </div>
           </div>
         </div>
+      </fieldset>
+
+      <fieldset class="fieldset">
+        <legend class="fieldset-legend">Custom Tournament Icon</legend>
+        <div class="space-y-2">
+          <input type="file" accept="image/*" class="file-input" @change="handleCustomLogoInput" />
+          <div class="text-xs text-muted">Upload an icon for the graphic screen</div>
+        </div>
+      </fieldset>
+
+      <fieldset class="fieldset">
+        <legend class="fieldset-legend">Hide Tournament Logo</legend>
+        <input type="checkbox" class="checkbox" v-model="hideTournamentLogo" />
       </fieldset>
     </div>
     <button class="btn" @click="saveSettings()">Save Settings</button>
