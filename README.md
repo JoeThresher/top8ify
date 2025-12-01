@@ -22,6 +22,11 @@ If you have used a top 8 graphic generator before, the UI will be very familiar.
 
 In the Advanced settings section, your StartGG token can be entered to allow use of importing from StartGG. Saving your settings will save the token for next time you open the program. Generate a StartGG token by following [these instructions](https://developer.start.gg/docs/authentication)
 
+## Planned features
+
+- Custom font handling, so users can use their own fonts uploaded through the UI
+- Character graphic packs, either user-uploadable or multiple packs included in the standard application
+
 ## Build Instructions
 
 ### Requirements
