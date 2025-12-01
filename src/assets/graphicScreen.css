@@ -9,9 +9,9 @@
 }
 
 .character-frames-container {
-  display: grid;
+  /* display: grid;
   place-content: center;
-  grid: auto / repeat(4, 1fr);
+  grid: auto / repeat(4, 1fr); */
   position: absolute;
   top: 40px;
   left: 140px;
@@ -26,7 +26,7 @@
   margin: 10px;
   background-color: rgba(0, 0, 0, 0.5);
   border-radius: 5px;
-  position: relative;
+  position: absolute;
 }
 
 .character-frame .character-image {
@@ -99,8 +99,8 @@
 }
 
 .tournament-logo {
-  width: 50px;
-  height: 50px;
+  width: 96px;
+  height: 96px;
   position: absolute;
   top: 10px;
   left: 10px;
@@ -112,4 +112,97 @@
   position: absolute;
   bottom: 680px;
   left: 1080px;
+}
+
+/* IDs */
+
+/* FRAME 1 */
+
+#frame-1 {
+  width: 250px;
+  height: 350px;
+  top: 140px;
+  left: -60px;
+}
+
+#player-name-frame-1 {
+  width: 250px;
+}
+
+#placement-number-1 {
+  font-size: 42px;
+}
+
+/* FRAME 2 */
+
+#frame-2 {
+  left: 260px;
+}
+
+/* FRAME 3 */
+
+#frame-3 {
+  left: 500px;
+}
+
+/* FRAME 4 */
+
+#frame-4 {
+  left: 740px;
+}
+
+/* FRAME 5 */
+
+#frame-5 {
+  left: 220px;
+  top: 320px;
+  width: 180px;
+  height: 280px;
+}
+
+#player-name-frame-5 {
+  width: 180px;
+  top: 0px;
+}
+
+/* FRAME 6 */
+
+#frame-6 {
+  left: 420px;
+  top: 320px;
+  width: 180px;
+  height: 280px;
+}
+
+#player-name-frame-6 {
+  width: 180px;
+  top: 0px;
+}
+
+/* FRAME 7 */
+
+#frame-7 {
+  left: 620px;
+  top: 320px;
+  width: 180px;
+  height: 280px;
+}
+
+#player-name-frame-7 {
+  width: 180px;
+  top: 0px;
+}
+
+/* FRAME 8 */
+
+#frame-8 {
+  left: 820px;
+  top: 320px;
+  width: 180px;
+  height: 280px;
+}
+
+#player-name-frame-8 {
+  width: 180px;
+  top: 0px;
 }

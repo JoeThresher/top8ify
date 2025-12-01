@@ -91,8 +91,8 @@ if (typeof window !== 'undefined') {
     <h1 class="tournament-title">{{ tournamentTitle }}</h1>
 
     <div class="character-frames-container">
-      <div class="character-frame" id="frame1" v-if="props.numPlayers >= 1">
-        <p class="placement-number">1</p>
+      <div class="character-frame" id="frame-1" v-if="props.numPlayers >= 1">
+        <p class="placement-number" id="placement-number-1">1</p>
         <img
           :src="getImagePath(props.characters[0], props.characterColors[0])"
           class="character-image"
@@ -112,13 +112,13 @@ if (typeof window !== 'undefined') {
           class="tertiary-character-image"
           @error="getDefaultStockIconPath"
         />
-        <div class="player-name-frame">
-          <p class="player-name">{{ props.playerNames[0] }}</p>
+        <div class="player-name-frame" id="player-name-frame-1">
+          <p class="player-name" id="player-name-1">{{ props.playerNames[0] }}</p>
         </div>
       </div>
 
-      <div class="character-frame" id="frame2" v-if="props.numPlayers >= 2">
-        <p class="placement-number">2</p>
+      <div class="character-frame" id="frame-2" v-if="props.numPlayers >= 2">
+        <p class="placement-number" id="placement-number-2">2</p>
         <img
           :src="getImagePath(props.characters[1], props.characterColors[1])"
           class="character-image"
@@ -138,13 +138,13 @@ if (typeof window !== 'undefined') {
           class="tertiary-character-image"
           @error="getDefaultStockIconPath"
         />
-        <div class="player-name-frame">
-          <p class="player-name">{{ props.playerNames[1] }}</p>
+        <div class="player-name-frame" id="player-name-frame-2">
+          <p class="player-name" id="player-name-2">{{ props.playerNames[1] }}</p>
         </div>
       </div>
 
-      <div class="character-frame" id="frame3" v-if="props.numPlayers >= 3">
-        <p class="placement-number">3</p>
+      <div class="character-frame" id="frame-3" v-if="props.numPlayers >= 3">
+        <p class="placement-number" id="placement-number-3">3</p>
         <img
           :src="getImagePath(props.characters[2], props.characterColors[2])"
           class="character-image"
@@ -164,13 +164,13 @@ if (typeof window !== 'undefined') {
           class="tertiary-character-image"
           @error="getDefaultStockIconPath"
         />
-        <div class="player-name-frame">
-          <p class="player-name">{{ props.playerNames[2] }}</p>
+        <div class="player-name-frame" id="player-name-frame-3">
+          <p class="player-name" id="player-name-3">{{ props.playerNames[2] }}</p>
         </div>
       </div>
 
-      <div class="character-frame" id="frame4" v-if="props.numPlayers >= 4">
-        <p class="placement-number">4</p>
+      <div class="character-frame" id="frame-4" v-if="props.numPlayers >= 4">
+        <p class="placement-number" id="placement-number-4">4</p>
         <img
           :src="getImagePath(props.characters[3], props.characterColors[3])"
           class="character-image"
@@ -190,13 +190,13 @@ if (typeof window !== 'undefined') {
           class="tertiary-character-image"
           @error="getDefaultStockIconPath"
         />
-        <div class="player-name-frame">
-          <p class="player-name">{{ props.playerNames[3] }}</p>
+        <div class="player-name-frame" id="player-name-frame-4">
+          <p class="player-name" id="player-name-4">{{ props.playerNames[3] }}</p>
         </div>
       </div>
 
-      <div class="character-frame" id="frame5" v-if="props.numPlayers >= 5">
-        <p class="placement-number">5</p>
+      <div class="character-frame" id="frame-5" v-if="props.numPlayers >= 5">
+        <p class="placement-number" id="placement-number-5">5</p>
         <img
           :src="getImagePath(props.characters[4], props.characterColors[4])"
           class="character-image"
@@ -216,13 +216,13 @@ if (typeof window !== 'undefined') {
           class="tertiary-character-image"
           @error="getDefaultStockIconPath"
         />
-        <div class="player-name-frame">
-          <p class="player-name">{{ props.playerNames[4] }}</p>
+        <div class="player-name-frame" id="player-name-frame-5">
+          <p class="player-name" id="player-name-5">{{ props.playerNames[4] }}</p>
         </div>
       </div>
 
-      <div class="character-frame" id="frame6" v-if="props.numPlayers >= 6">
-        <p class="placement-number">5</p>
+      <div class="character-frame" id="frame-6" v-if="props.numPlayers >= 6">
+        <p class="placement-number" id="placement-number-6">5</p>
         <img
           :src="getImagePath(props.characters[5], props.characterColors[5])"
           class="character-image"
@@ -242,13 +242,13 @@ if (typeof window !== 'undefined') {
           class="tertiary-character-image"
           @error="getDefaultStockIconPath"
         />
-        <div class="player-name-frame">
-          <p class="player-name">{{ props.playerNames[5] }}</p>
+        <div class="player-name-frame" id="player-name-frame-6">
+          <p class="player-name" id="player-name-6">{{ props.playerNames[5] }}</p>
         </div>
       </div>
 
-      <div class="character-frame" id="frame7" v-if="props.numPlayers >= 7">
-        <p class="placement-number">7</p>
+      <div class="character-frame" id="frame-7" v-if="props.numPlayers >= 7">
+        <p class="placement-number" id="placement-number-7">7</p>
         <img
           :src="getImagePath(props.characters[6], props.characterColors[6])"
           class="character-image"
@@ -268,13 +268,13 @@ if (typeof window !== 'undefined') {
           class="tertiary-character-image"
           @error="getDefaultStockIconPath"
         />
-        <div class="player-name-frame">
-          <p class="player-name">{{ props.playerNames[6] }}</p>
+        <div class="player-name-frame" id="player-name-frame-7">
+          <p class="player-name" id="player-name-7">{{ props.playerNames[6] }}</p>
         </div>
       </div>
 
-      <div class="character-frame" id="frame8" v-if="props.numPlayers >= 8">
-        <p class="placement-number">7</p>
+      <div class="character-frame" id="frame-8" v-if="props.numPlayers >= 8">
+        <p class="placement-number" id="placement-number-8">7</p>
         <img
           :src="getImagePath(props.characters[7], props.characterColors[7])"
           class="character-image"
@@ -294,8 +294,8 @@ if (typeof window !== 'undefined') {
           class="tertiary-character-image"
           @error="getDefaultStockIconPath"
         />
-        <div class="player-name-frame">
-          <p class="player-name">{{ props.playerNames[7] }}</p>
+        <div class="player-name-frame" id="player-name-frame-8">
+          <p class="player-name" id="player-name-8">{{ props.playerNames[7] }}</p>
         </div>
       </div>
     </div>
