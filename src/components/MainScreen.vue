@@ -21,10 +21,12 @@ const advancedOptions = ref<boolean>(false);
 const numPlayers = ref<number>(8);
 const hideTournamentLogo = ref<boolean>(false);
 const tournamentLogoPath = ref<string>('./graphic/tournament-logo.jpg');
+const hideBranding = ref<boolean>(false);
 
 onMounted(() => {
   token.value = (window.electron.store.get('apiToken') as string) || '';
   hideTournamentLogo.value = (window.electron.store.get('hideTournamentLogo') as boolean) || false;
+  hideBranding.value = (window.electron.store.get('hideBranding') as boolean) || false;
 });
 
 async function fetchStartGGData() {
@@ -154,6 +156,7 @@ async function fetchStartGGData() {
     v-model:numPlayers="numPlayers"
     v-model:hideTournamentLogo="hideTournamentLogo"
     v-model:tournamentLogoPath="tournamentLogoPath"
+    v-model:hideBranding="hideBranding"
   />
   <!-- <p>DEBUG: Characters selected: {{ characters }}</p>
   <p>DEBUG: Player names: {{ playerNames }}</p>
@@ -177,6 +180,7 @@ async function fetchStartGGData() {
       :numPlayers="numPlayers"
       :hideTournamentLogo="hideTournamentLogo"
       :tournamentLogoPath="tournamentLogoPath"
+      :hideBranding="hideBranding"
     />
   </div>
 </template>

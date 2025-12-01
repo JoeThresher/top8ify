@@ -14,10 +14,12 @@ const apiToken = defineModel<string>('apiToken');
 const numPlayers = defineModel<number>('numPlayers');
 const tournamentLogoPath = defineModel<string>('');
 const hideTournamentLogo = defineModel<boolean>('hideTournamentLogo');
+const hideBranding = defineModel<boolean>('hideBranding');
 
 function saveSettings() {
   window.electron.store.set('apiToken', apiToken.value);
   window.electron.store.set('hideTournamentLogo', hideTournamentLogo.value);
+  window.electron.store.set('hideBranding', hideBranding.value);
   toast.success('Settings saved successfully!');
 }
 
@@ -122,6 +124,8 @@ onMounted(() => {
         <legend class="fieldset-legend">Display elements</legend>
         <div class="text-xs text-muted">Hide tournament logo</div>
         <input type="checkbox" class="checkbox" v-model="hideTournamentLogo" />
+        <div class="text-xs text-muted">Hide branding</div>
+        <input type="checkbox" class="checkbox" v-model="hideBranding" />
       </fieldset>
     </div>
     <button class="btn" @click="saveSettings()">Save Settings</button>

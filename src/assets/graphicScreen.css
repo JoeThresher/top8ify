@@ -101,3 +101,11 @@
   top: 10px;
   left: 10px;
 }
+
+.branding-text {
+  color: #fff;
+  font-size: 20px;
+  position: absolute;
+  bottom: 680px;
+  left: 1080px;
+}

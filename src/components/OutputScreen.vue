@@ -17,6 +17,7 @@ const props = defineProps<{
   numPlayers: number;
   hideTournamentLogo: boolean;
   tournamentLogoPath: string;
+  hideBranding: boolean;
 }>();
 
 function getImagePath(character: string | undefined, color: string | undefined): string {
@@ -301,6 +302,7 @@ if (typeof window !== 'undefined') {
 
     <h2 class="tournament-info">{{ tournamentInfo }}</h2>
     <h2 class="tournament-url">{{ tournamentURL }}</h2>
+    <h2 class="branding-text" v-if="hideBranding === false">Made with Top8ify</h2>
   </div>
 </template>
 
