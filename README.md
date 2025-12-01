@@ -13,6 +13,8 @@ Top8ify is a top 8 graphic generator for Super Smash Bros. Melee, with the goal 
 - Saving user preferences for faster repeated graphic generation
 - Live updates as you enter data
 - Decrease player count for smaller tournaments featuring less than 8 players
+- Custom tournament logo support
+- Removable branding text with a simple toggle
 
 ## Usage
 

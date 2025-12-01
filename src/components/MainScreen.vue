@@ -40,6 +40,7 @@ async function fetchStartGGData() {
 
 <template>
   <div class="p-4 space-y-4 m-4 grid place-items-center">
+    <h1 class="text-center mt-10 mb-10 text-6xl">Top8ify</h1>
     <p>Start GG Import</p>
     <input type="text" placeholder="Enter Start GG URL here" class="input" v-model="url" />
     <button class="btn" @click="fetchStartGGData()">Fetch StartGG Data</button>
