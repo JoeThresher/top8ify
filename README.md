@@ -26,6 +26,7 @@ In the Advanced settings section, your StartGG token can be entered to allow use
 
 - Custom font handling, so users can use their own fonts uploaded through the UI
 - Character graphic packs, either user-uploadable or multiple packs included in the standard application
+- Maybe more games in the future?
 
 ## Build Instructions
 
