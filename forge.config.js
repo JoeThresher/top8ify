@@ -15,13 +15,23 @@ module.exports = {
       name: '@electron-forge/maker-zip',
       platforms: ['darwin'],
     },
+    // Uncomment if you want to build DEB or RPM packages
+    // {
+    //   name: '@electron-forge/maker-deb',
+    //   config: {},
+    // },
+    // {
+    //   name: '@electron-forge/maker-rpm',
+    //   config: {},
+    // },
     {
-      name: '@electron-forge/maker-deb',
-      config: {},
-    },
-    {
-      name: '@electron-forge/maker-rpm',
-      config: {},
+      name: '@reforged/maker-appimage',
+      config: {
+        options: {
+          categories: ['Graphics'],
+          icon: 'src/assets/icon.svg',
+        },
+      },
     },
     // {
     //   name: '@electron-forge/maker-flatpak',
