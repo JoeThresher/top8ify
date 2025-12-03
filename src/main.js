@@ -80,6 +80,7 @@ ipcMain.on('open-external-link', async (event, url) => {
 // const projectGraphicPath = path.resolve(process.cwd(), 'src', 'assets', 'graphicScreen.css');
 const customFileName = 'graphicScreen.css';
 const customLogoFileName = 'tournament-logo.png';
+const customBackgroundFileName = 'tournament-background.png';
 const backupName = 'graphicScreen.original.css';
 const backupPath = () => path.join(app.getPath('userData'), backupName);
 
@@ -90,6 +91,11 @@ async function resolveGraphicCssPath() {
 
 async function resolveGraphicLogoPath() {
   const userPath = path.join(app.getPath('userData'), customLogoFileName);
+  return { path: userPath, location: 'userData' };
+}
+
+async function resolveGraphicBackgroundPath() {
+  const userPath = path.join(app.getPath('userData'), customBackgroundFileName);
   return { path: userPath, location: 'userData' };
 }
 
@@ -198,5 +204,45 @@ ipcMain.handle('load-custom-logo', async () => {
 
 ipcMain.handle('get-custom-logo-path', async () => {
   const info = await resolveGraphicLogoPath();
+  return info.path;
+});
+
+ipcMain.handle('save-custom-background', async (event, dataUrl) => {
+  try {
+    const info = await resolveGraphicBackgroundPath();
+    // Extract base64 data from Data URL (format: "data:image/png;base64,xxxxx")
+    const base64Data = dataUrl.split(',')[1];
+    if (!base64Data) {
+      throw new Error('Invalid data URL format');
+    }
+    // Decode Base64 and write as binary
+    const buffer = Buffer.from(base64Data, 'base64');
+    await fs.writeFile(info.path, buffer);
+    return { success: true, path: info.path, location: info.location };
+  } catch (err) {
+    console.error('Failed to save tournament-background.png:', err);
+    return { success: false, error: String(err) };
+  }
+});
+
+ipcMain.handle('load-custom-background', async () => {
+  try {
+    const info = await resolveGraphicBackgroundPath();
+    // Read as binary and return as Data URL for direct use in img src
+    const buffer = await fs.readFile(info.path);
+    const base64Content = buffer.toString('base64');
+    // Determine MIME type from file extension
+    const ext = path.extname(info.path).toLowerCase();
+    const mimeType = ext === '.png' ? 'image/png' : 'image/jpeg';
+    const dataUrl = `data:${mimeType};base64,${base64Content}`;
+    return { exists: true, content: dataUrl, path: info.path, location: info.location };
+  } catch (err) {
+    // File might not exist in either location
+    return { exists: false, error: String(err) };
+  }
+});
+
+ipcMain.handle('get-custom-background-path', async () => {
+  const info = await resolveGraphicBackgroundPath();
   return info.path;
 });

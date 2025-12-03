@@ -3,6 +3,7 @@ import { useTemplateRef, ref, onMounted } from 'vue';
 import exportAsImage from '../utils/exportAsImage';
 const input = useTemplateRef('exportRef');
 const logoDataUrl = ref<string>('');
+const backgroundDataUrl = ref<string>('');
 const props = defineProps<{
   characters: string[];
   playerNames: string[];
@@ -50,8 +51,14 @@ onMounted(async () => {
     if (res && res.exists && res.content) {
       logoDataUrl.value = res.content;
     }
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    const resBackground = await window.electron?.loadCustomBackground?.();
+    if (resBackground && resBackground.exists && resBackground.content) {
+      backgroundDataUrl.value = `url(${resBackground.content})`;
+    }
   } catch (err) {
-    console.warn('Failed to load custom logo:', err);
+    console.warn('Failed to load custom logo or background:', err);
   }
 });
 
@@ -69,11 +76,28 @@ const reloadLogo = async () => {
   }
 };
 
+// Function to reload the custom background dynamically
+const reloadBackground = async () => {
+  try {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    const res = await window.electron?.loadCustomBackground?.();
+    if (res && res.exists && res.content) {
+      backgroundDataUrl.value = `url(${res.content})`;
+    }
+  } catch (err) {
+    console.warn('Failed to reload custom background:', err);
+  }
+};
+
 // Expose reloadLogo globally so fileOperations can call it
 if (typeof window !== 'undefined') {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   window.reloadLogoOnOutputScreen = reloadLogo;
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  window.reloadBackgroundOnOutputScreen = reloadBackground;
 }
 </script>
 
@@ -81,7 +105,11 @@ if (typeof window !== 'undefined') {
   <button class="btn m-4 btn-primary" @click="exportAsImage(input, 'exported-graphic')">
     Export as Image
   </button>
-  <div ref="exportRef" class="canvas">
+  <div
+    ref="exportRef"
+    class="canvas"
+    :style="{ 'background-image': backgroundDataUrl || 'url(./graphic/background.jpg)' }"
+  >
     <img
       class="tournament-logo"
       :src="logoDataUrl || tournamentLogoPath"

@@ -8,13 +8,14 @@ import {
   hasCustomCss,
   customCssPath,
   onFileSelectedIcon,
+  onFileSelectedBackground,
 } from '../utils/fileOperations';
 
 const apiToken = defineModel<string>('apiToken');
 const numPlayers = defineModel<number>('numPlayers');
-const tournamentLogoPath = defineModel<string>('');
 const hideTournamentLogo = defineModel<boolean>('hideTournamentLogo');
 const hideBranding = defineModel<boolean>('hideBranding');
+// const tournamentBackgroundPath = defineModel<string>('');
 
 function saveSettings() {
   window.electron.store.set('apiToken', apiToken.value);
@@ -29,12 +30,10 @@ function openLink(url: string) {
 
 async function handleCustomLogoInput(e: Event) {
   onFileSelectedIcon(e);
-  const logoPath = (await window.electron.getCustomLogoPath?.()) || '';
-  if (logoPath) {
-    console.log('Logo path: ', logoPath);
-    tournamentLogoPath.value = logoPath;
-    console.log('tournament logo path: ', tournamentLogoPath.value);
-  }
+}
+
+async function handleCustomBackgroundInput(e: Event) {
+  onFileSelectedBackground(e);
 }
 
 // refresh status on component mount
@@ -113,10 +112,23 @@ onMounted(() => {
       </fieldset>
 
       <fieldset class="fieldset">
-        <legend class="fieldset-legend">Custom Tournament Icon</legend>
+        <legend class="fieldset-legend">Tournament Icon</legend>
         <div class="space-y-2">
           <input type="file" accept="image/*" class="file-input" @change="handleCustomLogoInput" />
           <div class="text-xs text-muted">Upload an icon for the graphic screen</div>
+        </div>
+      </fieldset>
+
+      <fieldset class="fieldset">
+        <legend class="fieldset-legend">Background Image</legend>
+        <div class="space-y-2">
+          <input
+            type="file"
+            accept="image/*"
+            class="file-input"
+            @change="handleCustomBackgroundInput"
+          />
+          <div class="text-xs text-muted">Upload a background for the graphic screen</div>
         </div>
       </fieldset>
 

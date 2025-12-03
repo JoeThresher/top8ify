@@ -34,6 +34,10 @@ declare global {
         cssContent: string,
       ) => Promise<{ success: boolean; path?: string; location?: string; error?: string }>;
       getCustomLogoPath?: () => Promise<string>;
+      saveCustomBackground?: (
+        cssContent: string,
+      ) => Promise<{ success: boolean; path?: string; location?: string; error?: string }>;
+      getCustomBackgroundPath?: () => Promise<string>;
     };
   }
 }
@@ -152,6 +156,52 @@ export async function onFileSelectedIcon(e: Event) {
       }
     } catch (err) {
       toast.error('Failed to save custom logo');
+      console.error(err);
+    } finally {
+      uploading.value = false;
+      // clear the input so user can re-upload same file if needed
+      if (input) input.value = '';
+    }
+  };
+  reader.onerror = () => {
+    toast.error('Failed to read file');
+    uploading.value = false;
+  };
+  reader.readAsDataURL(file);
+}
+
+export async function onFileSelectedBackground(e: Event) {
+  const input = e.target as HTMLInputElement;
+  const file = input?.files?.[0];
+  if (!file) return;
+  if (!file.name.endsWith('.png') && !file.name.endsWith('.jpg') && !file.name.endsWith('.jpeg')) {
+    toast.error('Please select a png or jpeg file');
+    return;
+  }
+  uploading.value = true;
+  const reader = new FileReader();
+  reader.onload = async () => {
+    // Read as Data URL (base64-encoded already) for safe transmission
+    const dataUrl = reader.result as string;
+    try {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      const res = await window.electron.saveCustomBackground(dataUrl);
+      if (res && res.success) {
+        toast.success('Custom background uploaded and saved.');
+        // Dynamically reload the logo on OutputScreen instead of full page reload
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        if (window.reloadBackgroundOnOutputScreen) {
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          window.reloadBackgroundOnOutputScreen();
+        }
+      } else {
+        toast.error('Failed to save custom background: ' + (res?.error || 'unknown'));
+      }
+    } catch (err) {
+      toast.error('Failed to save custom background');
       console.error(err);
     } finally {
       uploading.value = false;
