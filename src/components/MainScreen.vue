@@ -20,7 +20,6 @@ const tournamentURL = ref<string>('');
 const advancedOptions = ref<boolean>(false);
 const numPlayers = ref<number>(8);
 const hideTournamentLogo = ref<boolean>(false);
-const tournamentLogoPath = ref<string>('./graphic/tournament-logo.jpg');
 const hideBranding = ref<boolean>(false);
 
 onMounted(() => {
@@ -156,7 +155,6 @@ async function fetchStartGGData() {
     v-model:apiToken="token"
     v-model:numPlayers="numPlayers"
     v-model:hideTournamentLogo="hideTournamentLogo"
-    v-model:tournamentLogoPath="tournamentLogoPath"
     v-model:hideBranding="hideBranding"
   />
   <!-- <p>DEBUG: Characters selected: {{ characters }}</p>
@@ -180,7 +178,6 @@ async function fetchStartGGData() {
       :tournamentURL="tournamentURL"
       :numPlayers="numPlayers"
       :hideTournamentLogo="hideTournamentLogo"
-      :tournamentLogoPath="tournamentLogoPath"
       :hideBranding="hideBranding"
     />
   </div>

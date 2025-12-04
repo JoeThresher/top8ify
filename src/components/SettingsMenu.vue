@@ -15,7 +15,6 @@ const apiToken = defineModel<string>('apiToken');
 const numPlayers = defineModel<number>('numPlayers');
 const hideTournamentLogo = defineModel<boolean>('hideTournamentLogo');
 const hideBranding = defineModel<boolean>('hideBranding');
-// const tournamentBackgroundPath = defineModel<string>('');
 
 function saveSettings() {
   window.electron.store.set('apiToken', apiToken.value);

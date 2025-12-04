@@ -4,6 +4,7 @@ import exportAsImage from '../utils/exportAsImage';
 const input = useTemplateRef('exportRef');
 const logoDataUrl = ref<string>('');
 const backgroundDataUrl = ref<string>('');
+const tournamentLogoPath = ref<string>('./graphic/tournament-logo.jpg');
 const props = defineProps<{
   characters: string[];
   playerNames: string[];
@@ -17,7 +18,6 @@ const props = defineProps<{
   tournamentURL: string;
   numPlayers: number;
   hideTournamentLogo: boolean;
-  tournamentLogoPath: string;
   hideBranding: boolean;
 }>();
 
