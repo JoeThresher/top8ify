@@ -1,1 +1,50 @@
-"use strict";const e=require("electron");e.contextBridge.exposeInMainWorld("electron",{store:{get(n){return e.ipcRenderer.sendSync("electron-store-get",n)},set(n,r){e.ipcRenderer.send("electron-store-set",n,r)}},saveCustomCss:async n=>await e.ipcRenderer.invoke("save-custom-css",n),loadCustomCss:async()=>await e.ipcRenderer.invoke("load-custom-css"),getCustomCssPath:async()=>await e.ipcRenderer.invoke("get-custom-css-path"),restoreOriginalCss:async()=>await e.ipcRenderer.invoke("restore-original-css"),openExternalLink(n){console.log("Requesting to open external link:",n),e.ipcRenderer.send("open-external-link",n)},saveCustomLogo:async n=>await e.ipcRenderer.invoke("save-custom-logo",n),loadCustomLogo:async()=>await e.ipcRenderer.invoke("load-custom-logo"),getCustomLogoPath:async()=>await e.ipcRenderer.invoke("get-custom-logo-path"),saveCustomBackground:async n=>await e.ipcRenderer.invoke("save-custom-background",n),loadCustomBackground:async()=>await e.ipcRenderer.invoke("load-custom-background"),getCustomBackgroundPath:async()=>await e.ipcRenderer.invoke("get-custom-background-path")});
+"use strict";
+const electron = require("electron");
+electron.contextBridge.exposeInMainWorld("electron", {
+  store: {
+    get(key) {
+      return electron.ipcRenderer.sendSync("electron-store-get", key);
+    },
+    set(property, val) {
+      electron.ipcRenderer.send("electron-store-set", property, val);
+    }
+    // Other method you want to add like has(), reset(), etc.
+  },
+  // Custom CSS APIs
+  saveCustomCss: async (cssContent) => {
+    return await electron.ipcRenderer.invoke("save-custom-css", cssContent);
+  },
+  loadCustomCss: async () => {
+    return await electron.ipcRenderer.invoke("load-custom-css");
+  },
+  getCustomCssPath: async () => {
+    return await electron.ipcRenderer.invoke("get-custom-css-path");
+  },
+  restoreOriginalCss: async () => {
+    return await electron.ipcRenderer.invoke("restore-original-css");
+  },
+  openExternalLink(url) {
+    console.log("Requesting to open external link:", url);
+    electron.ipcRenderer.send("open-external-link", url);
+  },
+  saveCustomLogo: async (imagePath) => {
+    return await electron.ipcRenderer.invoke("save-custom-logo", imagePath);
+  },
+  loadCustomLogo: async () => {
+    return await electron.ipcRenderer.invoke("load-custom-logo");
+  },
+  getCustomLogoPath: async () => {
+    return await electron.ipcRenderer.invoke("get-custom-logo-path");
+  },
+  saveCustomBackground: async (imagePath) => {
+    return await electron.ipcRenderer.invoke("save-custom-background", imagePath);
+  },
+  loadCustomBackground: async () => {
+    return await electron.ipcRenderer.invoke("load-custom-background");
+  },
+  getCustomBackgroundPath: async () => {
+    return await electron.ipcRenderer.invoke("get-custom-background-path");
+  }
+  // Any other methods you want to expose in the window object.
+  // ...
+});
