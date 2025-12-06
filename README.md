@@ -41,3 +41,4 @@ In the Advanced settings section, your StartGG token can be entered to allow use
 - Navigate into the directory and run: `npm install` to install all dependencies
 - Use `npm run start` to run the app in develop mode
 - Use `npm run package` to build a release
+- Use `npm run make` to create distributable packages
