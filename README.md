@@ -22,6 +22,20 @@ If you have used a top 8 graphic generator before, the UI will be very familiar.
 
 In the Advanced settings section, your StartGG token can be entered to allow use of importing from StartGG. Saving your settings will save the token for next time you open the program. Generate a StartGG token by following [these instructions](https://developer.start.gg/docs/authentication)
 
+## FAQ
+
+#### How do I create a custom CSS file for my graphic?
+
+Download a copy of [graphicScreen.css](https://github.com/JoeThresher/top8ify/blob/main/src/assets/graphicScreen.css) from this repository (/src/assets/graphicScreen.css) and tweak the styles for each component you'd like to customize. I tried to make it as legible as possible for easier customization, without requiring familiarity with the code itself. Then just upload the customized file using the app's UI in the Advanced Options section.
+
+#### Why is this an Electron app instead of a web app?
+
+The original idea I had would've been hosting this as a web app with GitHub Pages. However I realized that the functionality I wanted to create would require backend functionality in some way. I didn't want to host a server for the app to keep costs to a minimum and to allow for offline use of the app. This also allows for independence from a centralized server, allowing for more potential for anyone who'd like to fork the app. I would have liked to use a more modern framework like [Tauri](https://github.com/tauri-apps/tauri) but I was having crashing issues when testing with it.
+
+#### Why not build a native app?
+
+Main thing is that I already knew how to make a web app, so the learning curve was much less steep than building a native desktop app. The functionality I wanted also relied on web technologies like CSS stylesheets and [html2canvas-pro](https://github.com/yorickshan/html2canvas-pro).
+
 ## Planned features
 
 - Custom font handling, so users can use their own fonts uploaded through the UI
