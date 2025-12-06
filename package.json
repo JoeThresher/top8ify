@@ -1,7 +1,7 @@
 {
   "name": "top8ify",
   "productName": "top8ify",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A graphic generator for Super Smash Bros. Melee",
   "main": ".vite/build/main.js",
   "scripts": {
