@@ -29,10 +29,17 @@ onMounted(() => {
 });
 
 async function fetchStartGGData() {
-  const tournmanetDetails = await fetchTournamentDetails(url.value, token.value);
-  tournamentTitle.value = tournmanetDetails.name;
+  const tournamentDetails = await fetchTournamentDetails(url.value, token.value);
+  tournamentTitle.value = tournamentDetails.tournamentDetails.name;
+  tournamentInfo.value =
+    tournamentDetails.eventDetails.name +
+    ' - ' +
+    tournamentDetails.eventDetails.numEntrants +
+    ' Entrants - ' +
+    tournamentDetails.tournamentDetails.venueAddress;
+  tournamentURL.value = 'start.gg/' + tournamentDetails.tournamentDetails.shortSlug;
   for (let i = 0; i < 8; i++) {
-    playerNames.value[i] = tournmanetDetails.standings[i] ?? '';
+    playerNames.value[i] = tournamentDetails.standings[i] ?? '';
   }
 }
 </script>

@@ -11,14 +11,14 @@ export default async function fetchTournamentDetails(tournamentURLString: string
   });
 
   interface TournamentInfo {
-    id: string;
-    name: string;
+    eventDetails: { id: string; name: string; numEntrants: string };
+    tournamentDetails: { name: string; shortSlug: string; venueAddress: string };
     standings: string[];
   }
 
   const tournamentInfo: TournamentInfo = {
-    id: '',
-    name: '',
+    eventDetails: { id: '', name: '', numEntrants: '' },
+    tournamentDetails: { name: '', shortSlug: '', venueAddress: '' },
     standings: [],
   };
 
@@ -36,22 +36,23 @@ export default async function fetchTournamentDetails(tournamentURLString: string
     return tournamentInfo;
   }
 
-  tournamentInfo.id = await getEventId(slug, graphQLClient);
-  tournamentInfo.standings = await getEventStandings(tournamentInfo.id, graphQLClient);
+  tournamentInfo.eventDetails = await getEventDetails(slug, graphQLClient);
+  tournamentInfo.standings = await getEventStandings(tournamentInfo.eventDetails.id, graphQLClient);
   if (slugParts[1]) {
-    tournamentInfo.name = await getEventName(slugParts[1], graphQLClient);
+    tournamentInfo.tournamentDetails = await getTournamentDetails(slugParts[1], graphQLClient);
   }
 
-  toast.success('Retreived data for ' + tournamentInfo.name);
+  toast.success('Retreived data for ' + tournamentInfo.tournamentDetails.name);
   return tournamentInfo;
 }
 
-async function getEventId(slug: string, graphQLClient: GraphQLClient) {
+async function getEventDetails(slug: string, graphQLClient: GraphQLClient) {
   const query = gql`
-    query getEventId($slug: String) {
+    query getEventDetails($slug: String) {
       event(slug: $slug) {
         id
         name
+        numEntrants
       }
     }
   `;
@@ -61,12 +62,12 @@ async function getEventId(slug: string, graphQLClient: GraphQLClient) {
   };
 
   interface Data {
-    event: { id: string; name: string };
+    event: { id: string; name: string; numEntrants: string };
   }
 
   const data = await graphQLClient.request<Data>(query, variables);
   console.log(data);
-  return data.event.id;
+  return { id: data.event.id, name: data.event.name, numEntrants: data.event.numEntrants };
 }
 
 async function getEventStandings(eventId: string, graphQLClient: GraphQLClient) {
@@ -121,16 +122,13 @@ async function getEventStandings(eventId: string, graphQLClient: GraphQLClient) 
   return playerNames;
 }
 
-async function getEventName(tourneySlug: string, graphQLClient: GraphQLClient) {
+async function getTournamentDetails(tourneySlug: string, graphQLClient: GraphQLClient) {
   const query = gql`
-    query TournamentEvents($tourneySlug: String!) {
+    query GetTournamentDetails($tourneySlug: String!) {
       tournament(slug: $tourneySlug) {
-        id
         name
-        events {
-          id
-          name
-        }
+        shortSlug
+        venueAddress
       }
     }
   `;
@@ -141,13 +139,17 @@ async function getEventName(tourneySlug: string, graphQLClient: GraphQLClient) {
 
   interface Data {
     tournament: {
-      id: string;
       name: string;
-      events: Array<{ id: string; name: string }>;
+      shortSlug: string;
+      venueAddress: string;
     };
   }
 
   const data = await graphQLClient.request<Data>(query, variables);
   console.log(data);
-  return data.tournament.name;
+  return {
+    name: data.tournament.name,
+    shortSlug: data.tournament.shortSlug,
+    venueAddress: data.tournament.venueAddress,
+  };
 }
