@@ -1,4 +1,5 @@
 import { gql, GraphQLClient } from 'graphql-request';
+import { toast } from 'vue3-toastify';
 
 export default async function fetchTournamentDetails(tournamentURLString: string, token: string) {
   const endpoint = `https://api.start.gg/gql/alpha`;
@@ -21,14 +22,17 @@ export default async function fetchTournamentDetails(tournamentURLString: string
     standings: [],
   };
 
+  if (token === '') {
+    toast.error('No token provided');
+    return tournamentInfo;
+  }
+
   const tournamentURL: URL = new URL(tournamentURLString);
 
   const slug: string = tournamentURL.pathname.substring(1);
-  console.log('Slug:', slug);
   const slugParts: string[] = slug.split('/');
-  console.log('Slug Parts:', slugParts);
   if (slugParts.length < 2 || slugParts[0] !== 'tournament') {
-    console.error('Invalid tournament URL format.');
+    toast.error('Invalid tournament URL format.');
     return tournamentInfo;
   }
 
@@ -38,6 +42,7 @@ export default async function fetchTournamentDetails(tournamentURLString: string
     tournamentInfo.name = await getEventName(slugParts[1], graphQLClient);
   }
 
+  toast.success('Retreived data for ' + tournamentInfo.name);
   return tournamentInfo;
 }
 
