@@ -56,3 +56,10 @@ Main thing is that I already knew how to make a web app, so the learning curve w
 - Use `npm run start` to run the app in develop mode
 - Use `npm run package` to build a release
 - Use `npm run make` to create distributable packages
+
+### Build for Windows on a Linux machine
+
+- Install [Wine](https://www.winehq.org/) and [Mono](https://www.mono-project.com/)
+- On Ubuntu (may also be true for other distributions), wine32 may be missing. You can add it by running the following commands: `sudo dpkg --add-architecture i386` `sudo apt update` `sudo apt install wine32:i386` `sudo apt install --install-recommends wine`
+- You may also need to symlink `wine64` to `wine` in `/usr/bin/`. Navigate to this directory and run `sudo ln -s wine wine64`
+- Use `npm run make -- --platform=win32` to create a distributable .exe file for Windows
